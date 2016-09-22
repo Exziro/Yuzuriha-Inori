@@ -1,3 +1,3 @@
 Git is a vwesion control system.
-Git is free software.
+Git is free code。
 Git is a ....
