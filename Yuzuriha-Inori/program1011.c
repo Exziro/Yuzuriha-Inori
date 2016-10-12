@@ -40,7 +40,8 @@ switch(a){
 	game(b);
 	continue;
 case 2:
-	break;}
+	break;
+	default: printf("ÊäÈë´íÎó£¡£¡");}
 break;
 }
 return 0;
