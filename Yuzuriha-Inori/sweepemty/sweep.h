@@ -3,7 +3,7 @@
 #include<time.h>
 #define rows 11
 #define cols 11
-#define mine_number 10
+#define mine_number 20
 int get_mine(char mine[rows][cols],int x,int y);
 void display(char show[rows][cols]);
 void set_mine(char mine[rows][cols]);

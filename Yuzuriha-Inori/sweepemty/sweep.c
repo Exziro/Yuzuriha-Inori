@@ -17,7 +17,7 @@ void set_mine(char mine[rows][cols])
 		}
 	}
 }
-int get_mine(char mine[rows][cols],int x,int y)
+int get_mine(char mine[rows][cols],int x,int y)//判断上下左右的雷数
 {
 	int count =0;
 	if(mine[x-1][y-1]=='1')
@@ -87,9 +87,34 @@ void display(char show[rows][cols])
 //}
 void Sweep(char mine[rows][cols], char show[rows][cols])  
 {  
-    int count = 0;  
+    int count = 0; 
+	int ret =0;
     int x = 0;  
     int y = 0;  
+	printf("please number：\n");
+	scanf("%d%d", &x, &y); 
+	if (mine[x][y] == '1')
+	{       x=rand()%rows;
+			y=rand()%cols;
+			if(mine[x][y]=='0')
+		{
+			mine[x][y]='1';
+		}
+		   { ret = get_mine(mine, x, y);  
+            show[x][y] = ret + '0';  
+            //set_mine(mine);  
+            display(show);
+			count++;}
+
+	}
+	else
+	{       ret = get_mine(mine, x, y);  
+            show[x][y] = ret + '0';  
+            //set_mine(mine);  
+            display(show);
+			count++;
+
+	}
     while (count!=((rows-2)*(cols-2)-mine_number))  
     {  
         printf("please number：\n");  
@@ -98,7 +123,7 @@ void Sweep(char mine[rows][cols], char show[rows][cols])
         {  
             printf("you are die!!\n");  
       
-        }  
+       goto flag;}  
         else  
         {  
             int ret = get_mine(mine, x, y);  
@@ -108,7 +133,8 @@ void Sweep(char mine[rows][cols], char show[rows][cols])
             count++;  
         }  
     }  
-    printf("congratulation！\n");  
+    printf("congratulation！\n");
+	flag:
     display(mine);  
       
 }  
