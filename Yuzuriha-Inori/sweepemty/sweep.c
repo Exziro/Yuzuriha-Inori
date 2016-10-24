@@ -90,26 +90,26 @@ void Sweep(char mine[rows][cols], char show[rows][cols])
     int count = 0; 
 	int ret =0;
     int x = 0;  
-    int y = 0;  
+    int y = 0;
+	int a=0;
+	int b =0;
 	printf("please number£º\n");
 	scanf("%d%d", &x, &y); 
 	if (mine[x][y] == '1')
-	{       x=rand()%rows;
-			y=rand()%cols;
-			if(mine[x][y]=='0')
+	{       a=rand()%rows;
+			b=rand()%cols;
+			if(mine[a][b]=='0')
 		{
-			mine[x][y]='1';
+			mine[a][b]='1';
 		}
-		   { ret = get_mine(mine, x, y);  
-            show[x][y] = ret + '0';  
+			{ flower(mine,show,x,y);}  
             //set_mine(mine);  
             display(show);
 			count++;}
 
-	}
+	
 	else
-	{       ret = get_mine(mine, x, y);  
-            show[x][y] = ret + '0';  
+	{       flower(mine,show,x,y); 
             //set_mine(mine);  
             display(show);
 			count++;
@@ -144,3 +144,24 @@ void Sweep(char mine[rows][cols], char show[rows][cols])
 	// display(show);
 	// Sweep(mine,show);
  //}
+void flower(char mine[rows][cols],char show[rows][cols],int x,int y)
+{    int ret1,ret2,ret3,ret4,ret5,ret6,ret7,ret8;
+	 int ret = get_mine(mine, x, y);
+	 show[x][y] = ret + '0';
+	 ret1=get_mine(mine, x-1, y-1);
+	 show[x-1][y-1] = ret1 + '0';
+	 ret2=get_mine(mine, x, y-1);
+	  show[x][y-1] = ret2 + '0';
+	 ret3=get_mine(mine, x+1, y-1);
+	   show[x+1][y-1] = ret3 + '0';
+	 ret4=get_mine(mine, x+1, y);
+		show[x+1][y] = ret4 + '0';
+     ret5=get_mine(mine, x+1, y+1);
+		 show[x+1][y+1] = ret5 + '0';
+     ret6=get_mine(mine, x, y+1);
+		  show[x][y+1] = ret6 + '0';
+     ret7=get_mine(mine, x-1, y+1);
+		   show[x-1][y+1] = ret7 + '0';
+	 ret8=get_mine(mine, x-1, y);
+			show[x-1][y] = ret8 + '0';
+}

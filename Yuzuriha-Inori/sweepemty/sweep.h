@@ -9,3 +9,4 @@ void display(char show[rows][cols]);
 void set_mine(char mine[rows][cols]);
 void Sweep(char mine[rows][cols], char show[rows][cols]);
 void game(char mine[rows][cols],int x,int y);
+void flower(char mine[rows][cols],char show[rows][cols],int x,int y);
