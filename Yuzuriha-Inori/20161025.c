@@ -52,25 +52,40 @@
 //	printf("reverse number:%u\n",result);
 //	return 0;
 //}
-#include<stdio.h>
-int main()
-{
-	int arr[9]={1,3,5,7,1,3,5,8,8};
-	int i=0;
-	int t=0;
-	int j=0;
-	int count = 0;
-	for(i=0;i<9;i++)
-		{t=arr[i];
-	count=0;
-		for(j=0;j<9;j++)
-			if(1==arr[j]^t)
-			{
-			count++;}
-			
-		if(8==count)
-	{printf("The single dog is %d\n",arr[i]);
-	break;}}
-	return 0;
-}
+////#include<stdio.h>
+//int main()
+//{
+//	int arr[9]={1,3,5,7,1,3,5,8,8};
+//	int i=0;
+//	int t=0;
+//	int j=0;
+//	int count = 0;
+//	for(i=0;i<9;i++)
+//		{t=arr[i];
+//	count=0;
+//		for(j=0;j<9;j++)
+//			if(1==arr[j]^t)
+//			{
+//			count++;}
+//			
+//		if(8==count)
+//	{printf("The single dog is %d\n",arr[i]);
+//	break;}}
+//	return 0;
+//}
 
+    #include<stdio.h>  
+      
+      
+    int main()  
+    {  
+         int arr[]={1,3,5,7,1,3,5,8,8};  
+         int i=0;  
+         int len=sizeof(arr)/sizeof(arr[0]);   
+         for(i=1;i<len;i++)  
+         {  
+              arr[0]=arr[0]^arr[i];   
+         }  
+         printf("the single number is:%d\n",arr[0]);  
+         return 0;   
+    }  
