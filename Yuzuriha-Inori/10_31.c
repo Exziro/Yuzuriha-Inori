@@ -115,102 +115,102 @@
 // printf("\n");
 // return 0; 
 //}
-//#include <stdio.h>  
-//#include <assert.h>  
-//void replace(char *src)  
-//{    
-//    int OldLen = 0;                  //原字符串长度  
-//    int NewLen = 0;                  //新字符串长度  
-//    int BlackNum = 0;                //空格数量  
-//    int NewBack = 0;                 //新字符串尾部  
-//    int OldBack = 0;                 //原字符串尾部  
-//    while (src[OldLen] != '\0')  
-//    {  
-//        if (src[OldLen] == ' ')  
-//        {  
-//            BlackNum++;  
-//        }  
-//        OldLen++;  
-//    }  
-//    NewLen = OldLen + BlackNum * 2;  
-//    OldBack = OldLen-1;  
-//    NewBack = NewLen - 1;  
-//    while (OldBack!=0)  
-//    {  
-//        if (src[OldBack] == ' ')  
-//        {  
-//            src[NewBack--] = '0';  
-//            src[NewBack--] = '2';  
-//            src[NewBack] = '%';  
-//        }  
-//        else  
-//        {  
-//            src[NewBack] = src[OldBack];  
-//        }  
-//        OldBack--;  
-//        NewBack--;  
-//    }  
-//}  
-//int main()  
-//{  
-//    char p[20] = "we have fun!!";  
-//    replace(p);  
-//    printf("%s\n", p);  
-//    return 0;  
-//    return 0;  
+#include <stdio.h>  
+#include <assert.h>  
+void replace(char *src)  
+{    
+    int OldLen = 0;                    
+    int NewLen = 0;                   
+    int BlackNum = 0;                  
+    int NewBack = 0;                   
+    int OldBack = 0;                   
+    while (src[OldLen] != '\0')  
+    {  
+        if (src[OldLen] == ' ')  
+        {  
+            BlackNum++;  
+        }  
+        OldLen++;  
+    }  
+    NewLen = OldLen + BlackNum * 2;  
+    OldBack = OldLen-1;  
+    NewBack = NewLen - 1;  
+    while (OldBack!=0)  
+    {  
+        if (src[OldBack] == ' ')  
+        {  
+            src[NewBack--] = '0';  
+            src[NewBack--] = '2';  
+            src[NewBack] = '%';  
+        }  
+        else  
+        {  
+            src[NewBack] = src[OldBack];  
+        }  
+        OldBack--;  
+        NewBack--;  
+    }  
+}  
+int main()  
+{  
+    char p[20] = "we have fun!!";  
+    replace(p);  
+    printf("%s\n", p);  
+    return 0;  
+    return 0;  
+}
+//#include<stdio.h>
+//int Strlen(char * arr)
+//{
+//	int count =0;
+//	int i = 0;
+//    while(arr[i]!='\0')
+//	{count++;
+//	i++;
+//    }
+//	return count;
 //}
-#include<stdio.h>
-int Strlen(char * arr)
-{
-	int count =0;
-	int i = 0;
-    while(arr[i]!='\0')
-	{count++;
-	i++;
-    }
-	return count;
-}
-
-char Reverse(char *start,char *stop)
-{
-	char temp;
-	while(start<stop)
-	{
-		temp=*start;
-		*start=*stop;
-		*stop=temp;
-	stop--;
-	start++;
-
-	}
-}
-
-char S_reverse(char *arr,int len)
-{
-	char *str=arr;
-	char *left=arr;
-	char *right=arr+len-1;
-	Reverse(left,right);
-	while(*str)
-	{
-		left=str;
-		while((*str !='\0')&&(*str!=' '))
-		{
-			str++;
-		}
-		right = str-1;
-		Reverse(left,right);
-		if(*str==' ')
-		{
-			str++;
-		}
-	}
-}
-int main()
-{
-	char arr[]="student a am i";
-	int len=Strlen(arr);
-	S_reverse(arr,len);
-	printf("%s\n",arr);
-	return 0;
-}
+//
+//char Reverse(char *start,char *stop)
+//{
+//	char temp;
+//	while(start<stop)
+//	{
+//		temp=*start;
+//		*start=*stop;
+//		*stop=temp;
+//	stop--;
+//	start++;
+//
+//	}
+//}
+//
+//char S_reverse(char *arr,int len)
+//{
+//	char *str=arr;
+//	char *left=arr;
+//	char *right=arr+len-1;
+//	Reverse(left,right);
+//	while(*str)
+//	{
+//		left=str;
+//		while((*str !='\0')&&(*str!=' '))
+//		{
+//			str++;
+//		}
+//		right = str-1;
+//		Reverse(left,right);
+//		if(*str==' ')
+//		{
+//			str++;
+//		}
+//	}
+//}
+//int main()
+//{
+//	char arr[]="student a am i";
+//	int len=Strlen(arr);
+//	S_reverse(arr,len);
+//	printf("%s\n",arr);
+//	return 0;
+//}
