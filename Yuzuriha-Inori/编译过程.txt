@@ -1,0 +1,556 @@
+
+
+1、预处理
+
+ 
+
+预处理是C语言程序从源代码变成可执行程序的第一步，主要是C语言编译器对各种预处理命令进行处理，包括头文件的包含、宏定义的扩展、条件编译的选择等。打印出预处理之后的结果：gcc -E hello.c 或者 cpp hello.c这样我们就可以看到源代码中的各种预处理命令是如何被解释的，从而方便理解和查错。
+
+ 
+
+gcc调用了cpp的(虽然我们通过gcc的-v仅看到cc1)，cpp即The C Preprocessor，主要用来预处理宏定义、文件包含、条件编译等。下面介绍它的一个比较重要的选项-D。在命令行定义宏：gcc –Dmacro=1 hello.c 或者 cpp –Dmacro=1 hello.c等同于在文件的开头定义宏，即#define maco，但是在命令行定义更灵活。例如，在源代码中有这些语句:
+
+ 
+
+#ifdef DEBUG
+
+printf("this code is for debuggingn");
+
+#endif
+
+ 
+
+ 
+
+2、编译
+
+ 
+
+编译之前，C语言编译器会进行词法分析、语法分析(-fsyntax-only)，接着会把源代码翻译成中间语言，即汇编语言。如果想看到这个中间结果，可以用-S选项。
+
+编译程序工作时，先分析，后综合，从而得到目标程序。所谓分析，是指词法分析和语法分析；所谓综合是指代码优化，存储分配和代码生成。为了完成这些分析综合任务，编译程序采用对源程序进行多次扫描的办法，每次扫描集中完成一项或几项任务，也有一项任务分散到几次扫描去完成的。下面举一个四遍扫描的例子：第一遍扫描做词法分析；第二遍扫描做语法分析；第三遍扫描做代码优化和存储分配；第四遍扫描做代码生成。 
+
+值得一提的是，大多数的编译程序直接产生机器语言的目标代码，形成可执行的目标文件，但也有的编译程序则先产生汇编语言一级的符号代码文件，然后再调用汇编程序进行翻译加工处理，最后产生可执行的机器语言目标文件。 
+
+语法检查之后是翻译动作，gcc提供了一个优化选项-O，以便根据不同的运行平台和用户要求产生经过优化的汇编代码。例如，
+
+$ gcc -o hello hello.c             #采用默认选项，不优化
+$ gcc -O2 -o hello2 hello.c        #优化等次是2
+$ gcc -Os -o hellos hello.c        #优化目标代码的大小
+
+$ time ./hello         #查看代码运行时间
+hello, world
+
+根据上面的简单演示，可以看出gcc有很多不同的优化选项，主要看用户的需求了，目标代码的大小和效率之间貌似存在一个“纠缠”，需要开发人员自己权衡。
+
+ 
+
+下面我们通过-S选项来看看编译出来的中间结果，汇编语言，还是以之前那个hello.c为例。
+复制代码
+
+$ gcc -S hello.c                 #默认输出是hello.s，可自己指定
+
+$ cat hello.s
+
+cat hello.s
+
+        .file   "hello.c"
+
+        .section        .rodata
+
+.LC0:
+
+        .string "hello, world"
+
+        .text
+
+.globl main
+
+        .type   main, @function
+
+main:
+
+        leal    4(%esp), %ecx
+
+        andl    $-16, %esp
+
+        pushl   -4(%ecx)
+
+        pushl   %ebp
+
+        movl    %esp, %ebp
+
+        pushl   %ecx
+
+        subl    $4, %esp
+
+        movl    $.LC0, (%esp)
+
+        call    puts
+
+        movl    $0, %eax
+
+        addl    $4, %esp
+
+        popl    %ecx
+
+        popl    %ebp
+
+        leal    -4(%ecx), %esp
+
+        ret
+
+        .size   main, .-main
+
+        .ident  "GCC: (GNU) 4.1.3 20070929 (prerelease) (Ubuntu 4.1.2-16ubuntu2)"
+
+        .section        .note.GNU-stack,"",@progbits
+
+复制代码
+
+ 
+
+ 
+
+和intel的汇编语法不太一样，这里用的是AT&T语法格式。这里需要补充的是，在写C语言代码时，如果能够对编译器比较熟悉（工作原理和一些细节）的话，可能会很有帮助。包括这里的优化选项(有些优化选项可能在汇编时采用)和可能的优化措施。
+
+ 
+
+3、汇编
+
+ 
+
+把作为中间结果的汇编代码翻译成了机器代码，即目标代码，不过它还不可以运行。如果要产生这一中间结果，可用gcc的-c选项，当然，也可通过as命令_汇编_汇编语言源文件来产生。
+
+ 
+
+$ file hello.s
+
+hello.s: ASCII assembler program text
+
+ 
+
+$ gcc -c hello.s             #用gcc把汇编语言编译成目标代码
+
+$ file hello.o                 #file命令可以用来查看文件的类型
+
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+
+ 
+
+$as -o hello.o hello.s     #用as把汇编语言编译成目标代码
+
+$ file hello.o
+
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+
+ 
+
+gcc和as默认产生的目标代码都是ELF格式的，因此这里主要讨论ELF格式的目标代码。目标代码不再是普通的文本格式，无法直接通过文本编辑器浏览，需要一些专门的工具。
+
+ 
+
+binutils(GNU Binary Utilities)的很多工具都采用这个库来操作目标文件，这类工具有objdump, objcopy, nm, strip等，不过另外一款非常优秀的分析工具readelf并不是基于这个库，所以你也应该可以直接用elf.h头文件中定义的相关结构来操作ELF文件。
+
+ 
+
+ELF文件的结构：
+
+1. ELF Header (ELF文件头)说明了文件的类型，大小，运行平台，节区数目等。
+
+2. Porgram Headers Table (程序头表，实际上叫段表好一些，用于描述可执行文件和可共享库)
+
+Section 1
+
+Section 2   
+
+...
+
+3. Section Headers Table(节区头部表，用于链接可重定位文件成可执行文件或共享库)
+
+ 
+
+可以分别通过 readelf文件的-h，-l和-S参数查看ELF文件头(ELF Header)、程序头部表（Program Headers Table，段表）和节区表(Section Headers Table)。
+
+ 
+
+下面通过这几段代码来演示通过readelf -h参数查看ELF的不同类型。期间将演示如何创建动态连接库(即可共享文件)、静态连接库，并比较它们的异同。
+
+ 
+
+$ gcc -c myprintf.c test.c          #编译产生两个目标文件myprintf.o和test.o，它们都是可重定位文件(REL)
+
+$ readelf -h test.o | grep Type   
+
+  Type:                              REL (Relocatable file)
+
+$ readelf -h myprintf.o | grep Type
+
+  Type:                              REL (Relocatable file)
+
+$ gcc -o test myprintf.o test.o     #根据目标代码连接产生可执行文件，这里的文件类型是可执行的(EXEC)
+
+$ readelf -h test | grep Type
+
+  Type:                              EXEC (Executable file)
+
+$ ar rcsv libmyprintf.a myprintf.o  #用ar命令创建一个静态连接库
+
+$ readelf -h libmyprintf.a | grep Type  #因此，使用静态连接库和可重定位文件一样，它们之间唯一不同是前者可以是多个可重定位文件的“集合”。
+
+  Type:                              REL (Relocatable file)
+
+$ gcc -o test test.o -llib -L./      #可以直接连接进去，也可以使用-l参数，-L指定库的搜索路径
+
+$ gcc -Wall myprintf.o -shared -Wl,-soname,libmyprintf.so.0 -o libmyprintf.so.0.0                   #编译产生动态链接库，并支持major和minor版本号，动态链接库类型为DYN
+
+$ ln -sf libmyprintf.so.0.0 libmyprintf.so.0
+
+$ ln -sf libmyprintf.so.0 libmyprintf.so
+
+$ readelf -h libmyprintf.so | grep Type
+
+  Type:                              DYN (Shared object file)
+
+$ gcc -o test test.o -llib -L./      #编译时和静态连接库类似，但是执行时需要指定动态连接库的搜索路径
+
+$ LD_LIBRARY_PATH=./ ./test          #LD_LIBRARY_PATH为动态链接库的搜索路径
+
+$ gcc -static -o test test.o -llib -L./  #在不指定static时会优先使用动态链接库，指定时则阻止使用动态连接库这个时候会把所有静态连接库文件加入到可执行文件中.
+
+ 
+
+可重定位文件本身不可以运行，仅仅是作为可执行文件、静态连接库（也是可重定位文件）、动态连接库的 “组件”。
+
+ 
+
+下面来看看ELF文件的主体内容，节区（Section)。ELF文件具有很大的灵活性，它通过文件头组织整个文件的总体结构，通过节区表 (Section Headers Table)和程序头（Program Headers Table或者叫段表)来分别描述可重定位文件和可执行文件。在可重定位文件中，节区表描述的就是各种节区本身；而在可执行文件中，程序头描述的是由各个节区组成的段（Segment），以便程序运行时动态装载器知道如何对它们进行内存映像，从而方便程序加载和运行。
+
+ 
+
+可以通过readelf的-S参数查看ELF的节区。先来看看可重定位文件的节区信息，通过节区表来查看：
+
+$ gcc -c myprintf.c             #默认编译好myprintf.c，将产生一个可重定位的文件myprintf.o
+
+ 
+
+$ readelf -S myprintf.o         #通过查看myprintf.o的节区表查看节区信息
+
+There are 11 section headers, starting at offset 0xc0:
+
+Section Headers:
+
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+
+  [ 1] .text             PROGBITS        00000000 000034 000018 00  AX  0   0  4
+
+  [ 2] .rel.text         REL             00000000 000334 000010 08      9   1  4
+
+  [ 3] .data             PROGBITS        00000000 00004c 000000 00  WA  0   0  4
+
+  [ 4] .bss              NOBITS          00000000 00004c 000000 00  WA  0   0  4
+
+  [ 5] .rodata           PROGBITS        00000000 00004c 00000e 00   A  0   0  1
+
+  [ 6] .comment          PROGBITS        00000000 00005a 000012 00      0   0  1
+
+  [ 7] .note.GNU-stack   PROGBITS        00000000 00006c 000000 00      0   0  1
+
+  [ 8] .shstrtab         STRTAB          00000000 00006c 000051 00      0   0  1
+
+  [ 9] .symtab           SYMTAB          00000000 000278 0000a0 10     10   8  4
+
+  [10] .strtab           STRTAB          00000000 000318 00001a 00      0   0  1
+
+Key to Flags:
+
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+
+  I (info), L (link order), G (group), x (unknown)
+
+  O (extra OS processing required) o (OS specific), p (processor specific)
+
+ 
+
+$ objdump -d -j .text myprintf.o    #这里是程序指令部分，用objdump的-d选项可以看到反编译的结果，-j指定需要查看的节区
+
+myprintf.o:     file format elf32-i386
+
+Disassembly of section .text:
+复制代码
+
+00000000 :
+
+   0:   55                      push   %ebp
+
+   1:   89 e5                   mov    %esp,%ebp
+
+   3:   83 ec 08                sub    $0x8,%esp
+
+   6:   83 ec 0c                sub    $0xc,%esp
+
+   9:   68 00 00 00 00          push   $0x0
+
+   e:   e8 fc ff ff ff          call   f
+
+  13:   83 c4 10                add    $0x10,%esp
+
+  16:   c9                      leave
+
+  17:   c3                      ret
+
+ 
+
+复制代码
+
+ 
+
+$ readelf -r myprintf.o              #用-r选项可以看到有关重定位的信息，这里有两部分需要重定位
+
+Relocetion section '.rel.text' at offset 0x334 contains 2 entries:
+
+ Offset     Info    Type            Sym.Value  Sym. Name
+
+0000000a  00000501 R_386_32          00000000   .rodata
+
+0000000f  00000902 R_386_PC32        00000000   puts
+
+ 
+
+$ readelf -x .rodata myprintf.o      #.rodata节区包含只读数据，即我们要打印的hello, world!.
+
+Hex dump of section '.rodata':
+
+  0x00000000 68656c6c 6f2c2077 6f726c64 2100     hello, world!.
+
+ 
+
+$ readelf -x .data myprintf.o         #没有这个节区,.data应该包含一些初始化的数据
+
+Section '.data' has no data to dump.
+
+ 
+
+$ readelf -x .bss myprintf.o          #也没有这个节区，.bss应该包含一些未初始化的数据，程序默认初始为0
+
+Section '.bss' has no data to dump.
+
+ 
+
+$ readelf -x .comment myprintf.o      #是一些注释，可以看到是是GCC的版本信息
+
+Hex dump of section '.comment':
+
+  0x00000000 00474343 3a202847 4e552920 342e312e .GCC: (GNU) 4.1.
+
+  0x00000010 3200                                2.
+
+ 
+
+$ readelf -x .note.GNU-stack myprintf.o #这个也没有内容
+
+Section '.note.GNU-stack' has no data to dump.
+
+ 
+
+$ readelf -x .shstrtab myprintf.o      #包括所有节区的名字
+
+Hex dump of section '.shstrtab':
+
+  0x00000000 002e7379 6d746162 002e7374 72746162 ..symtab..strtab
+
+  0x00000010 002e7368 73747274 6162002e 72656c2e ..shstrtab..rel.
+
+  0x00000020 74657874 002e6461 7461002e 62737300 text..data..bss.
+
+  0x00000030 2e726f64 61746100 2e636f6d 6d656e74 .rodata..comment
+
+  0x00000040 002e6e6f 74652e47 4e552d73 7461636b ..note.GNU-stack
+
+  0x00000050 00                                  .
+
+ 
+
+$ readelf –x .symtab myprintf.o        #符号表，包括所有用到的相关符号信息，如函数名、变量名
+
+Symbol table '.symtab' contains 10 entries:
+
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND
+
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS myprintf.c
+
+     2: 00000000     0 SECTION LOCAL  DEFAULT    1
+
+     3: 00000000     0 SECTION LOCAL  DEFAULT    3
+
+     4: 00000000     0 SECTION LOCAL  DEFAULT    4
+
+     5: 00000000     0 SECTION LOCAL  DEFAULT    5
+
+     6: 00000000     0 SECTION LOCAL  DEFAULT    7
+
+     7: 00000000     0 SECTION LOCAL  DEFAULT    6
+
+     8: 00000000    24 FUNC    GLOBAL DEFAULT    1 myprintf
+
+     9: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND puts
+
+ 
+
+$ readelf -x .strtab myprintf.o    #字符串表，用到的字符串，包括文件名、函数名、变量名等。
+
+Hex dump of section '.strtab':
+
+  0x00000000 006d7970 72696e74 662e6300 6d797072 .myprintf.c.mypr
+
+  0x00000010 696e7466 00707574 7300              intf.puts.
+
+ 
+
+从上表可以看出，对于可重定位文件，会包含这些基本节区.text, .rel.text, .data, .bss, .rodata, .comment, .note.GNU-stack, .shstrtab, .symtab和.strtab。
+
+ 
+
+看一看myprintf.c产生的汇编代码。
+
+$ gcc -S myprintf.c
+复制代码
+
+$ cat myprintf.s
+
+        .file   "myprintf.c"
+
+        .section        .rodata
+
+.LC0:
+
+        .string "hello, world!"
+
+        .text
+
+.globl myprintf
+
+        .type   myprintf, @function
+
+myprintf:
+
+        pushl   %ebp
+
+        movl    %esp, %ebp
+
+        subl    $8, %esp
+
+        subl    $12, %esp
+
+        pushl   $.LC0
+
+        call    puts
+
+        addl    $16, %esp
+
+        leave
+
+        ret
+
+        .size   myprintf, .-myprintf
+
+        .ident  "GCC: (GNU) 4.1.2"
+
+        .section        .note.GNU-stack,"",@progbits
+
+ 
+
+复制代码
+
+ 
+
+4、链接
+
+ 
+
+链接是处理可重定位文件，把它们的各种符号引用和符号定义转换为可执行文件中的合适信息(一般是虚拟内存地址)的过程。链接又分为静态链接和动态链接，前者是程序开发阶段程序员用ld(gcc实际上在后台调用了ld)静态链接器手动链接的过程，而动态链接则是程序运行期间系统调用动态链接器(ld-linux.so)自动链接的过程。比如，如果链接到可执行文件中的是静态连接库libmyprintf.a，那么.rodata节区在链接后需要被重定位到一个绝对的虚拟内存地址，以便程序运行时能够正确访问该节区中的字符串信息。而对于puts，因为它是动态连接库libc.so中定义的函数，所以会在程序运行时通过动态符号链接找出puts函数在内存中的地址，以便程序调用该函数。
+
+ 
+
+静态链接过程主要是把可重定位文件依次读入，分析各个文件的文件头，进而依次读入各个文件的节区，并计算各个节区的虚拟内存位置，对一些需要重定位的符号进行处理，设定它们的虚拟内存地址等，并最终产生一个可执行文件或者是动态链接库。这个链接过程是通过ld来完成的，ld在链接时使用了一个链接脚本（linker scripq），该链接脚本处理链接的具体细节。这里主要介绍可重定位文件中的节区（节区表描述的）和可执行文件中段（程序头描述的）的对应关系以及gcc编译时采用的一些默认链接选项。
+
+ 
+
+下面先来看看可执行文件的节区信息，通过程序头（段表）来查看：
+
+=======================================================================
+
+$ readelf -S test.o                        #为了比较，先把test.o的节区表也列出
+There are 10 section headers, starting at offset 0xb4:
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 000024 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 0002ec 000008 08      8   1  4
+  [ 3] .data             PROGBITS        00000000 000058 000000 00  WA  0   0  4
+  [ 4] .bss              NOBITS          00000000 000058 000000 00  WA  0   0  4
+  [ 5] .comment          PROGBITS        00000000 000058 000012 00      0   0  1
+  [ 6] .note.GNU-stack   PROGBITS        00000000 00006a 000000 00      0   0  1
+  [ 7] .shstrtab         STRTAB          00000000 00006a 000049 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 000244 000090 10      9   7  4
+  [ 9] .strtab           STRTAB          00000000 0002d4 000016 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+
+=======================================================================
+
+$ gcc -o test test.o libmyprintf.o
+$ readelf -l test        #我们发现，test和test.o,libmyprintf.o相比，多了很多节区，如.interp和.init等
+Elf file type is EXEC (Executable file)
+Entry point 0x80482b0
+There are 7 program headers, starting at offset 52
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  PHDR           0x000034 0x08048034 0x08048034 0x000e0 0x000e0 R E 0x4
+  INTERP         0x000114 0x08048114 0x08048114 0x00013 0x00013 R   0x1
+      [Requesting program interpreter: /lib/ld-linux.so.2]
+  LOAD           0x000000 0x08048000 0x08048000 0x0047c 0x0047c R E 0x1000
+  LOAD           0x00047c 0x0804947c 0x0804947c 0x00104 0x00108 RW  0x1000
+  DYNAMIC        0x000490 0x08049490 0x08049490 0x000c8 0x000c8 RW  0x4
+  NOTE           0x000128 0x08048128 0x08048128 0x00020 0x00020 R   0x4
+  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x4
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     
+   01     .interp 
+   02     .interp .note.ABI-tag .hash .dynsym .dynstr .gnu.version .gnu.version_r .rel.dyn .rel.plt .init .plt .text .fini .rodata .eh_frame 
+   03     .ctors .dtors .jcr .dynamic .got .got.plt .data .bss 
+   04     .dynamic 
+   05     .note.ABI-tag 
+   06     
+
+上表给出了可执行文件的如下几个段(segment)，
+
+PHDR: 给出了程序表自身的大小和位置，不能出现一次以上。
+INTERP: 因为程序中调用了puts（在动态链接库中定义），使用了动态连接库，因此需要动态装载器／链接器(ld-linux.so)
+LOAD: 包括程序的指令，.text等节区都映射在该段，只读(R)
+LOAD: 包括程序的数据，.data, .bss等节区都映射在该段，可读写(RW)
+DYNAMIC: 动态链接相关的信息，比如包含有引用的动态连接库名字等信息
+NOTE: 给出一些附加信息的位置和大小
+GNU_STACK: 这里为空，应该是和GNU相关的一些信息
+
+这里的段可能包括之前的一个或者多个节区，也就是说经过链接之后原来的节区被重排了，并映射到了不同的段，这些段将告诉系统应该如何把它加载到内存中。这些新的节区来自哪里？它们的作用是什么呢？先来通过gcc的-v参数看看它的后台链接过程。
+
+=======================================================================
+
+$ gcc -v -o test test.o myprintf.o    #把可重定位文件链接成可执行文件
+Reading specs from /usr/lib/gcc/i486-slackware-linux/4.1.2/specs
+Target: i486-slackware-linux
+Configured with: ../gcc-4.1.2/configure --prefix=/usr --enable-shared --enable-languages=ada,c,c++,fortran,java,objc --enable-threads=posix --enable-__cxa_atexit --disable-checking --with-gnu-ld --verbose --with-arch=i486 --target=i486-slackware-linux --host=i486-slackware-linux
+Thread model: posix
+gcc version 4.1.2
+ /usr/libexec/gcc/i486-slackware-linux/4.1.2/collect2 --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -o test /usr/lib/gcc/i486-slackware-linux/4.1.2/http://www.cnblogs.com/../crt1.o /usr/lib/gcc/i486-slackware-linux/4.1.2/http://www.cnblogs.com/../crti.o /usr/lib/gcc/i486-slackware-linux/4.1.2/crtbegin.o -L/usr/lib/gcc/i486-slackware-linux/4.1.2 -L/usr/lib/gcc/i486-slackware-linux/4.1.2 -L/usr/lib/gcc/i486-slackware-linux/4.1.2/http://www.cnblogs.com/http://www.cnblogs.com/i486-slackware-linux/lib -L/usr/lib/gcc/i486-slackware-linux/4.1.2/http://www.cnblogs.com/.. test.o myprintf.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/i486-slackware-linux/4.1.2/crtend.o /usr/lib/gcc/i486-slackware-linux/4.1.2/http://www.cnblogs.com/../crtn.o
+
+ 
