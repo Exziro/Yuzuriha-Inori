@@ -1,0 +1,19 @@
+#include<stdio.h>
+#include<windows.h>
+int main()
+{
+
+
+
+	//enum L{O =1,C=8,P=16,Q=32,G=128};
+	//enum L j;
+	//j=Q;
+	//printf("%s",j);
+	//j=j+P;
+	//printf("%s",j);//枚举相当于整形而非字符型
+
+	//enum pointer{poit=11,point=2};//正反面
+
+	system("pause");
+	return 0;
+}
