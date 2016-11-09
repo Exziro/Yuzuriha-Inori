@@ -60,7 +60,86 @@
 //int main()
 //{
 //
-int reverse(char * arr)
+//int reverse(char * arr)
+//{
+//	char *left=arr;
+//	char *right=strlen(*arr);
+//}
+//char * conserve ( char * left,char*right )  //ÄæĞò×Ö·û´®
+//{  
+//       // char *start = string;  
+//       // char *left = string;  
+//       // char ch;  
+// 
+//       // while (*string++)                 
+//       //         ;  
+//       //// string -= 2;  
+//	char ch;
+// 
+//        while (left < right)  
+//        {  
+//                ch = *left;  
+//                *left = *right;  
+//                *right= ch;  
+//					left++;
+//					right--;
+//        }  
+//
+//          
+//} 
+//void rotate(char * string,int n)//×óĞı
+//{      
+//        int i=strlen(string);
+//		conserve(string,string+n-1);
+//		conserve(string+n,string+i-1);
+//		conserve(string,string+i-1);
+//		
+//}
+//int main()
+//{
+//	char a[]="abcdef";
+//	rotate(a,1);
+//	printf("%s",a);
+//	system("pause");
+//	return 0;
+//}
+
+
+int Strstr(char*arr,char*string)
 {
-	char *left=arr;
-	char *right=strlen(*arr);
+	int i,j,k;
+	int count=0;
+	int counts=0;
+	int len=strlen(arr);
+	while(1)
+	{
+		while(*arr!='0')
+		{if(*arr++==*string)
+			{*string++;
+			counts++;}
+		if(*string=='\0')
+			break;
+		if(*arr=='\0')
+		{
+			count++;
+			arr=arr-len;
+		}
+		}
+		if(count==1)
+			break;
+	}
+	if(counts==6)
+		return 1;
+	else return 0;
+}
+int main()
+{
+	int i;
+	char a[]="abcdef";
+	char b[]="cdefab";
+	i=Strstr(a,b);
+	printf("%d",i);
+	system("pause");
+	return 0;
+}
+
