@@ -67,13 +67,6 @@
 //}
 //char * conserve ( char * left,char*right )  //ÄæÐò×Ö·û´®
 //{  
-//       // char *start = string;  
-//       // char *left = string;  
-//       // char ch;  
-// 
-//       // while (*string++)                 
-//       //         ;  
-//       //// string -= 2;  
 //	char ch;
 // 
 //        while (left < right)  
@@ -142,7 +135,7 @@
 //	system("pause");
 //	return 0;
 //}
-//
+
 //int main()
 //{
 //	int a=1;
@@ -192,8 +185,7 @@ int main()
 			printf("%d\n",a[i]);
 			i--;
 		}
-	//for(i=0;i<7;i++)
-	//	printf("%d",a[i]);
+
 	}
 	system("pause");
 	return 0;
