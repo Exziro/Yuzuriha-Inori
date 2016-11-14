@@ -21,12 +21,11 @@ void myprintf(char*fmt,...)
 				printf("%d",*((int*)pArg));
 				break;
 			case 'f':
-				printf("%d",*((float*)pArg));
+				printf("%f",*((float*)pArg));
 				break;
 			default:
 				break;
 			}
-			va_arg(pArg,int);
 		}
 		++fmt;
 	}while(*fmt!='\0');
@@ -37,7 +36,7 @@ int main()
 {	int i=1234;
 	int j=5678;
 	myprintf("test one:=%d",i);
-	myprintf("test one:=%f",i);
+	myprintf("test one:=%f",j);
 	system("pause");
 	return 0;
 }
