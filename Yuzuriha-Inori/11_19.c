@@ -119,28 +119,41 @@
 //	//printf("%c",Find(a,len));
 //	system("pause");
 //	return 0;
+////}
+//char *my_strcpy(const char *arr,char*pp)
+//{
+//	assert(*arr);
+//	assert(*pp);
+//	char *p=pp;
+//	while(*pp)
+//	{
+//		*pp=*arr;
+//		pp++;
+//		arr++;
+//	}
+//
+//	*pp='\0';
+//	return p;
 //}
-char *my_strcpy(const char *arr,char*pp)
+//int main()
+//{
+//	char arr[]="hello world!";
+//	char pp[1000];
+//	my_strcpy(arr,pp);
+//	printf("%s",pp);
+//	system("pause");
+//	return 0;
+//}
+int fun(int a,int b)
 {
-	assert(*arr);
-	assert(*pp);
-	char *p=pp;
-	while(*pp)
-	{
-		*pp=*arr;
-		pp++;
-		arr++;
-	}
-
-	*pp='\0';
-	return p;
+	return a+b;
 }
 int main()
 {
-	char arr[]="hello world!";
-	char pp[1000];
-	my_strcpy(arr,pp);
-	printf("%s",pp);
+	int a=0xaaaaaaaa;
+	int b=0xbbbbbbbb;
+	int ret=fun(a,b);
+	printf("%d\n",ret);
 	system("pause");
 	return 0;
 }
