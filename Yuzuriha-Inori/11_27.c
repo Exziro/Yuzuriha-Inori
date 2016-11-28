@@ -52,29 +52,43 @@
 //	system("pause");
 //	return 0;
 //}
-void my_buuble(char *a,int n)
-{
-	int i;
-	int j;
-	int flag=0;
-	for(i=0;i<n;i++)
-	{	for(j=0;j<n-i-1;j++)
-		{
-			if(a[j]>a[j+1])
-				{a[j]^=a[j+1];
-				a[j+1]^=a[j];
-				a[j]^=a[j+1];
-			}
-		}
-    }
-}
-int main()
-{ 
-	int i;
-	char a[]="abcfdfghj";
-	my_buuble(a,9);
-	for(i=0;i<9;i++)
-		printf("%c",a[i]);
-	system("pause");
-	return 0;
-}
+//void my_buuble(double *a,int n)
+//{
+//	int i;
+//	int j;
+//	double p;
+//	int flag=0;
+//	for(i=0;i<n;i++)
+//	{	for(j=0;j<n-i-1;j++)
+//		{
+//			if(a[j]>a[j+1])
+//			{	a[j]=p;
+//				a[j]=a[j+1];
+//				a[j+1]=p;
+//				//{a[j]^=a[j+1];
+//				//a[j+1]^=a[j];
+//				//a[j]^=a[j+1];
+//			}
+//		}
+//    }
+//}
+////int main()
+////{ 
+////	int i;
+////	char a[]="abcfdfghj";
+////	my_buuble(a,9);
+////	for(i=0;i<9;i++)
+////		printf("%c",a[i]);
+////	system("pause");
+////	return 0;
+////}
+//int main()
+//{ 
+//	int i;
+//	double a[]={1.3,2.3,0.3,4.3};
+//	my_buuble(a,4);
+//	for(i=0;i<4;i++)
+//		printf("%f",a[i]);
+//	system("pause");
+//	return 0;
+//}
