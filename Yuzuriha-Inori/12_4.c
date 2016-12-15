@@ -61,12 +61,16 @@ void Destorycontact(contact_p p)
 	p=NULL;
 }
 
-void Add(contact_p p1,person_p p2 );
+void Add(contact_p p1,person_p p2 )
 {
+	int pos;
 	assert("p1");
 	assert("p2");
 	if(!isful(p1)||aadcontact(p1))
-		int
+		pos=p1->size;
+		p1->contactlist(pos)=*p2;
+		p1->size++;
+}
 
 void Find();
 void Show();
