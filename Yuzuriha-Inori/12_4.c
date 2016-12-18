@@ -22,8 +22,9 @@ static int isful(contact_p p)
 
 static int  aadcontact(contact_p p)//自增一个新的存储空间
 {
+
+	person_p flash=(person_p)realloc(p->contactlist,p->cap+INIT_NUMBER);
 	assert(p);
-	contact_p flash=(contact_p)realloc(p->contactlist,p->cap+INIT_NUMBER);
 	if(NULL==flash)
 	{
 		perror("malloc");
@@ -61,16 +62,16 @@ void Destorycontact(contact_p p)
 	p=NULL;
 }
 
-void Add(contact_p p1,person_p p2 )
+int Add(contact_p p1,person_t p2 )
 {
 	int pos;
 	assert("p1");
-	printf("please enter some message:like name,sex,age,phone,address");
-	scanf("%s%c%d%s%s",p2.name,&p2.sex,&p2.age,&p2.phone,&p2.address);//第一个是数组传递的是首元素地址不需再取地址
+	//printf("please enter some message:like name,sex,age,phone,address");
+	/*scanf("%s%c%d%s%s",p2.name,&p2.sex,&p2.age,&p2.phone,&p2.address)*/;//第一个是数组传递的是首元素地址不需再取地址
 	assert("p2");
 	if(!isful(p1)||aadcontact(p1)){
 		pos=p1->size;
-		p1->contactlist[pos]=*p2;
+		p1->contactlist[pos]=p2;
 		p1->size++;
 	}
 
