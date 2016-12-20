@@ -6,7 +6,7 @@ typedef struct person
 	char sex;
 	unsigned char age;
 	char phone[16];
-	char addre[256];
+	char address[256];
 }person_t,*person_p,**person_pp;
 typedef struct contact 
 {
@@ -16,9 +16,13 @@ typedef struct contact
 }contact_t,*contact_p,**contact_pp;
 
 void menue();
-void Add();
+void initcontact(contact_pp p);//初始化
+static int isful(contact_p p);//判断创建的内容是否已满
+static int  aadcontact(contact_p p);//自增一个新的存储空间
+void Destorycontact(contact_p p);//清空
+int Add(contact_p p1,person_t p2 );//添加通讯录
 void Find();
-void Show();
+void Show(contact_p p);
 void Empty();
 void Sort();
 void Change();
