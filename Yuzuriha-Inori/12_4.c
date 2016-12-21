@@ -75,10 +75,21 @@ int Add(contact_p p1,person_t p2 )
 		p1->size++;
 	}
 
-}
+return ;}
 
-void Find();
-void Show();
-void Empty();
-void Sort();
-void Change();
+//void Find();
+//void Show(contact_p p)
+//{
+//	int i=0;
+//	assert(p);
+//	for(i=0;i<p->size;i++)
+//	{
+//		printf("%16s | %1c | %3d | %16s | %32s\n",p->contactlist[i].name,p->contactlist[i].sex,p->contactlist[i].phone,p->contactlist[i].phone,p->contactlist[i].address);
+//	}
+//	printf("NOENE");
+//}
+//		
+//		//void Empty();
+//
+//		//void Sort();
+////void Change();
