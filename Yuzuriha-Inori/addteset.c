@@ -12,30 +12,32 @@ int addd(contact_p p)
 	scanf("%s%c%d%s%s",pp.name,&pp.sex,&pp.age,&pp.phone,&pp.address);
     return Add(p,pp);
 }
-int main()
-{
-	int n;
-	contact_p mycontact=NULL;
-	initcontact(&mycontact);
-	menue();
-		printf("please change:");
-		scanf("%d",&n);
-		switch (n)
-		{
-		case 1:addd(mycontact);break;
-		//case 2:Find();break;
-		//case 3:Change();break;
-		//case 4:Show();break;
-		//case 5:Empty();break;
-		//case 6:Sort();break;
-		case 0:exit;
-		default: printf("erro:please try again");
-			break;
-		}
-
-
-
-
-		system("pause");
-		return 0;
-	}
+//int main()
+//{
+//	int n;
+//	contact_p mycontact=NULL;
+//	initcontact(&mycontact);
+//	volatile int done =1;
+//	while(!done){
+//	    menue();
+//		printf("please change:");
+//		scanf("%d",&n);
+//		switch (n)
+//		{
+//		case 1:addd(mycontact);break;
+//		//case 2:Find();break;
+//		//case 3:Change();break;
+//		case 4:Show();break;
+//		//case 5:Empty();break;
+//		//case 6:Sort();break;
+//		case 0:exit;
+//		default: printf("erro:please try again");
+//			break;
+//		}
+//
+//
+//
+//
+//		system("pause");
+//		return 0;
+//	}
