@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include<assert.h>
+#include<stdlib.h>
 #include"addressbook.h"
 #define INIT_NUMBER 128
+#define MAXNAME 20
 void menue()
 {
 	printf("*****AddressBook****\n");
@@ -99,6 +101,15 @@ void Empty(contact_p p)
 }
 void Find(contact_p p)
 {
+	int i=0;
+	char name[MAXNAME];
 	assert(p);
 	printf("main name :");
-	scanf("%c",)
+	scanf("%c",name);
+	for(i=0;i<p->size;i++)
+		if(strcmp(name,p->contactlist[i].name)==0){
+	    printf("%16s | %1c | %3d | %16s | %32s\n",p->contactlist[i].name,p->contactlist[i].sex,p->contactlist[i].phone,p->contactlist[i].phone,p->contactlist[i].address);
+		}
+		else 
+			printf("wrong name");
+}
