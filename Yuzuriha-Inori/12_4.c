@@ -55,7 +55,7 @@ void initcontact(contact_pp p )//初始化一个通讯录
 	(*p)->cap=INIT_NUMBER;
 	(*p)->size=0;
 }
-void Destorycontact(contact_p p)
+void Destorycontact(contact_p p)//删除通讯录
 {
 	assert(p);
 	free(p->contactlist);
@@ -64,7 +64,7 @@ void Destorycontact(contact_p p)
 	p=NULL;
 }
 
-int Add(contact_p p1,person_t p2 )
+int Add(contact_p p1,person_t p2 )//添加元素
 {
 	int pos;
 	assert("p1");
@@ -79,8 +79,8 @@ int Add(contact_p p1,person_t p2 )
 
 return ;}
 
-void Find();
-void Show(contact_p p)
+
+void Show(contact_p p)//按顺序打印
 {
 	int i=0;
 	assert(p);
@@ -95,11 +95,11 @@ void Show(contact_p p)
 
 		//void Sort();
 //void Change();
-void Empty(contact_p p)
+void Empty(contact_p p)//清空
 {
 	p->size=0;
 }
-void Find(contact_p p)
+void Find(contact_p p)//查找相关元素
 {
 	int i=0;
 	char name[MAXNAME];
