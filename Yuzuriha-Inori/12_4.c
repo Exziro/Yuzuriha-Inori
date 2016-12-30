@@ -113,3 +113,19 @@ void Find(contact_p p)//查找相关元素
 		else 
 			printf("wrong name");
 }
+void Change(contact_p p)
+{
+	int i=0;
+	char name[MAXNAME];
+	assert(p);
+	printf("main name :");
+	scanf("%c",name);
+	for(i=0;i<p->size;i++)
+		if(strcmp(name,p->contactlist[i].name)==0){
+	    printf("%16s | %1c | %3d | %16s | %32s\n",p->contactlist[i].name,p->contactlist[i].sex,p->contactlist[i].phone,p->contactlist[i].phone,p->contactlist[i].address);
+			printf("please change some message:like name,sex,age,phone,address");
+			scanf("%s%c%d%s%s",p->contactlist[i].name,p->contactlist[i].sex,p->contactlist[i].phone,p->contactlist[i].phone,p->contactlist[i].address);
+		}
+		else
+			printf("wrong name");
+}
