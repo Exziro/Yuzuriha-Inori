@@ -24,5 +24,5 @@ int Add(contact_p p1,person_t p2 );//Ìí¼ÓÍ¨Ñ¶Â¼
 void Find(contact_p p);
 void Show(contact_p p);
 void Empty(contact_p p);
-//void Sort();
+void Sort(contact_p p);
 void Change(contact_p p);
