@@ -8,4 +8,7 @@ typedef struct SeqList
 	int size;
 }Seqlist;
 void InitSqlist(Seqlist * seq);
+{
+	seq->len = 0;
+}
 
