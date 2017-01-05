@@ -12,8 +12,8 @@ void InitSqlist(Seqlist * seq)
 {
 	seq->size=0;
 }
-void insert(Seqlist * seq)
-{
-
-
-
+//void insert(Seqlist * seq)
+//{
+//
+//
+//
