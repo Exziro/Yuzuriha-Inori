@@ -12,10 +12,10 @@ void InitSqlist(Seqlist * seq)
 {
 	seq->size=0;
 }
-void insert(Seqlist * seq)
-{
-	//int i;
-	seq->arr=malloc(1*sizeof(int));
-
-}
+//void insert(Seqlist * seq)
+//{
+//	//int i;
+//	seq->arr=malloc(1*sizeof(int));
+//
+//}
 
