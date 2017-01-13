@@ -15,7 +15,7 @@ void InitSqlist(Seqlist * seq)
 //void insert(Seqlist * seq)
 //{
 //	//int i;
-//	seq->arr=malloc(1*sizeof(int));
-//
-//}
+	seq->arr=malloc(1*sizeof(int));
+
+}
 
