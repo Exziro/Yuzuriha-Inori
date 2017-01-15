@@ -66,7 +66,7 @@ void Popback(Seqlist *seq)
 	assert(seq);
 	seq->longside-=1;
 }
-void Pushifront(Seqlist * seq,DateType _data)
+void Pushifront(Seqlist * seq,DateType _data)//头插
 {
 	int i =0;
 	assert(seq);
@@ -77,7 +77,7 @@ void Pushifront(Seqlist * seq,DateType _data)
 	}
 	else
 	{
-	for(i=0;i<seq->longside+1;i++)
+	for(i=seq->longside+1;i>0;i--)
 	{
 		seq->arr[i+1]=seq->arr[i];
 	}
@@ -85,6 +85,88 @@ void Pushifront(Seqlist * seq,DateType _data)
 	seq->longside++;//先加后加是否会出现问题
 	}
 }
-void PopFront(Seqlist *seq)
+void PopFront(Seqlist *seq)//头删
 {
+	int i =0;
+	assert(seq);
+	
+	if(seq->longside!=0)
+	{
+		for(i=0;i<seq->longside-1;i++){//需要确定加减
+			seq->arr[i]=seq->arr[i+1];
+		}
+
+	}
+	else
+		return ;
+}
+void InsertPos(Seqlist *seq,int _size,DateType _date)
+{
+	int i =0;
+	assert(seq);
+	assert(_date);
+	if(_size<1||_size>seq->longside+2){
+		printf("erro!!");
+	}
+	if(_size==seq->longside+1)
+	{
+		Addspace(seq);
+	}
+	{
+		for(i=seq->longside;i<_size;i--){
+			seq->arr[i+1]=seq->arr[i];
+	}
+	seq->arr[_size]=_date;
+	seq->longside++;
+	}
+}
+void Erase(Seqlist *seq,int _size)
+{
+		int i =0;
+	assert(seq);
+	if(_size<1||_size>seq->longside){
+		printf("erro!!");
+	}
+	{
+		if(seq->longside!=0)
+	{
+		for(i=0;i<seq->longside-1;i++)//需要确定加减
+			seq->arr[i]=seq->arr[i+1];
+		
+	}
+	seq->longside--;
+	if(seq->longside==0)
+	{
+		printf("No number!!!");
+	}
+}
+}
+
+int Find(Seqlist *seq,DateType _date)
+{
+	int i;
+	assert(seq);
+	for(i=0;i<seq->longside;i++){
+		if(_date==seq->arr[i]){
+			return 1;
+			break;
+		}
+	}
+	return -1;
+}
+void RemoveAll(Seqlist *seq,DateType _date)
+{
+		int i;
+	assert(seq);
+	if(Find(seq,_date)==1)
+	for(i=0;i<seq->longside;i++){
+		if(_date==seq->arr[i]){
+			Erase(seq,i);
+		}
+	}
+	else
+	{
+		printf("NO number!!");
+	}
+}
 
