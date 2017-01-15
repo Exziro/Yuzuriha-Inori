@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<windows.h>
 #include<malloc.h>
+#include<assert.h>
 #define MAX 10
 #define erro 1
 typedef int DateType;
@@ -20,14 +21,14 @@ DateType InitSqlist(Seqlist *seq)//初始化分配空间
 	return 0;
 
 }
-DateType Full(SeqList *seq)//判满
+DateType Full(Seqlist *seq)//判满
 {
 	if(seq->longside==seq->size)
 		return 1;
 	else
 		return 0;
 }
-DateType Addspace(SeqList *seq)
+DateType Addspace(Seqlist *seq)
 {
 	DateType *newspace;
 	if (Full(seq))
@@ -41,7 +42,7 @@ DateType Addspace(SeqList *seq)
 }
 
 
-DateType pushback(SeqList * seq,DateType _date)
+DateType pushback(Seqlist * seq,DateType _date)
 {
 	if(Full(seq))
 	{
@@ -60,3 +61,30 @@ DateType pushback(SeqList * seq,DateType _date)
 	}
 	return 0;
 }
+void Popback(Seqlist *seq)
+{
+	assert(seq);
+	seq->longside-=1;
+}
+void Pushifront(Seqlist * seq,DateType _data)
+{
+	int i =0;
+	assert(seq);
+	assert(_data);
+	if(Full(seq))
+	{
+		Addspace(seq);
+	}
+	else
+	{
+	for(i=0;i<seq->longside+1;i++)
+	{
+		seq->arr[i+1]=seq->arr[i];
+	}
+	seq->arr[0]=_data;
+	seq->longside++;//先加后加是否会出现问题
+	}
+}
+void PopFront(Seqlist *seq)
+{
+
