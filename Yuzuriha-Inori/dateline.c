@@ -170,3 +170,62 @@ void RemoveAll(Seqlist *seq,DateType _date)
 	}
 }
 
+void Bubblesort(Seqlist *seq)
+{
+	int i= 0;
+	int j= 0;
+	int mid=0;
+	assert(seq);
+	for(i=0;i<seq->longside-1;i++){
+		for(j=0;j<seq->longside-1-i;j++)
+		{
+			if(seq->arr[j]>seq->arr[i])
+				{seq->arr[j]=mid;
+				seq->arr[j]=seq->arr[i];
+				seq->arr[i]=mid;
+		}
+		}
+	}
+}
+void Quicksort(Seqlist *seq)
+{
+	int i;
+	int j=0;
+	int n=0;
+	int mid=seq->arr[0];
+	assert(seq);
+	for(n=0;n<seq->longside;n++){
+	for(i=n;i<seq->longside;i++){
+		if(seq->arr[i]>mid)
+		{
+			mid=seq->arr[i];
+	}
+	}
+	seq->arr[n]=mid;
+	}
+}
+int Binaryserch(Seqlist *seq,DateType date)
+{
+	int e=seq->longside;
+	int mid =0;
+	int s=0;
+	assert(seq);
+	while(seq->arr[s]<seq->arr[e]){
+	if(date==seq->arr[e])
+	{
+		return 1;
+	}
+	if(date==seq->arr[s])
+	{
+		return 1;
+	}
+	mid=(s+e)/2;
+	if(seq->arr[mid]==date)
+          return 1;             //查找成功返回
+        if(seq->arr[mid]==date)
+          e=mid+1;              //继续在R[mid+1..high]中查找
+        else
+          s=mid-1;  
+	}
+	return -1;
+}
