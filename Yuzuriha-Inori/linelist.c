@@ -50,7 +50,7 @@ void Pusherase(Pnode* phead)//É¾³ýÎ²Á´±í
 		}
 		(*phead)=NULL;
 }
-void PushFront(Pnode * phead,Datetype date)
+void PushFront(Pnode * phead,Datetype date)//Í·²å
 {
 	Pnode  _new=(Node*)malloc(sizeof(struct Node));
 		if(_new==NULL)
@@ -67,3 +67,16 @@ void PushFront(Pnode * phead,Datetype date)
 		(*phead)->next=_new;
 	}
 }
+//82BEI;61BEI;69BEI;75BEI;103BEI;113BEI
+void Popfront(Pnode *phead)
+{
+	/*Pnode _new;*/
+	assert((*phead));
+	if((*phead)->next==NULL)
+	{
+		printf("NULL");
+	}
+	//_new=(*phead);
+	(*phead)=(*phead)->next;
+}
+//uwcp15Ats4
