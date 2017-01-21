@@ -80,3 +80,43 @@ void Popfront(Pnode *phead)
 	(*phead)=(*phead)->next;
 }
 //uwcp15Ats4
+Pnode Find(Pnode phead,Datetype date)
+{
+	Pnode _new;
+	assert(phead);
+	_new=phead;
+	while(NULL!=phead->next)
+	{
+		_new=phead;
+		if(date==phead->date)
+		{
+			
+			return (_new);
+		}
+		else 
+		{
+			phead=phead->next;
+		}
+	}
+	printf("this date is not live");
+}
+void Insert(Pnode*phead,Pnode pos,Datetype date)//插入到pos位置的数据
+{
+	Pnode mid;
+	Pnode  _new=(Node*)malloc(sizeof(struct Node));
+	if((*phead)==NULL)
+	{
+		_new=(*phead)->next;
+	}
+	else
+	{
+		while((*phead)!=pos)//未判断pos点问题
+		{
+			(*phead)=(*phead)->next;
+		}
+		mid=(*phead)->next;
+		(*phead)->next=_new;
+		_new->next=mid;
+	}
+}
+void()
