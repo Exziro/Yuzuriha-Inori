@@ -119,4 +119,62 @@ void Insert(Pnode*phead,Pnode pos,Datetype date)//插入到pos位置的数据
 		_new->next=mid;
 	}
 }
-void()
+void Erase(Pnode *phead,Pnode pos)
+{
+	Pnode _new;
+		if((*phead)==NULL)
+	{
+		printf("NO number!!");
+	}
+	else
+	{
+		while((*phead)!=NULL)//未判断pos点问题
+		{
+			_new=(*phead);
+			if(pos==(*phead)){
+				_new->next=(*phead)->next;}
+			(*phead)=(*phead)->next;
+
+		}
+		}
+}
+void Remove(Pnode *phead,Datetype date)
+{
+		Pnode _new;
+		if((*phead)==NULL)
+	{
+		printf("NO number!!");
+	}
+	else
+	{
+		while((*phead)!=NULL)
+		{
+			_new=(*phead);
+			if(date==(*phead)->date){
+				_new->next=(*phead)->next;}
+			(*phead)=(*phead)->next;
+			break;//找到后直接跳出
+
+		}
+		}
+}
+
+void Removeall(Pnode *phead,Datetype date)
+{
+		Pnode _new;
+		if((*phead)==NULL)
+	{
+		printf("NO number!!");
+	}
+	else
+	{
+		while((*phead)!=NULL)
+		{
+			_new=(*phead);
+			if(date==(*phead)->date){
+				_new->next=(*phead)->next;}
+			(*phead)=(*phead)->next;
+
+		}
+		}
+}
