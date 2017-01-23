@@ -178,3 +178,72 @@ void Removeall(Pnode *phead,Datetype date)
 		}
 		}
 }
+//xbnyzxkl0308
+//	QQ340032071
+int size(Pnode phead)//链表的大小
+{
+	int n=0;
+	if(phead->next==NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		while(phead!=NULL)
+		{
+			phead=phead->next;
+			n++;
+		}
+		return n;
+	}
+}
+Pnode Front(Pnode head)//返回第一个节点地址
+{
+	if(head!=NULL)
+		return head->next;
+	else 
+		return ;
+}
+
+Pnode last(Pnode phead)//返回最后一个节点位置
+{
+			Pnode _new;
+			if(phead==NULL)
+	{
+		printf("NO number!!");
+	}
+	else
+	{
+		while(phead!=NULL)
+		{
+			_new=phead;
+			_new->next=phead->next;}
+			phead=phead->next;
+
+		}
+		return _new;
+}
+int empty(Pnode head)//判空 空返回1 非空返回0
+{
+	if(head->next==NULL)
+		return 0;
+	else 
+		return 1;
+}
+void print(Pnode phead)
+{
+	int n=0;
+	if(phead->next==NULL)
+	{
+		return ;
+	}
+	else
+	{
+		while(phead!=NULL)
+		{
+			phead=phead->next;
+			printf("%d",phead->date);
+		}
+		
+	}
+}
