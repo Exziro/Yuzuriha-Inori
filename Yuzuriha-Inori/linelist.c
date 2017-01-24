@@ -247,3 +247,16 @@ void print(Pnode phead)
 		
 	}
 }
+void reverse(Pnode phead)//逆序打印
+{
+	if(phead==NULL)
+	{
+		return ;
+	}                      //此处直接打印即为顺序打印
+	if(phead->next!=NULL){
+		reverse(phead);
+	}
+	printf("%d",phead->date);
+}
+
+
