@@ -258,10 +258,27 @@ void reverse(Pnode phead)//逆序打印
 	}
 	printf("%d",phead->date);
 }
-void removeno(Pnode *phead)//删除无头链表的指定节点  参数需要传入当前节点
+void	DeletNotTailNode(Pnode *phead)//删除无头链表的指定节点  参数需要传入当前节点
 {
 	assert((*phead));
 	(*phead)->date=(*phead)->next->date;//将下一节点的值复制到当前节点删除下一节点 即是删除当前节点
 	(*phead)->next=(*phead)->next->next;
 }
 
+void InsertNotTailNode(Pnode *phead,Datetype date)//在无头单链表非头节点前插入新节点
+{
+	Pnode _new;
+	Datetype i=0;
+	_new->date=date;
+	_new->next=(*phead)->next;
+	(*phead)->next=_new;//将新节点插入到当前节点的下一个节点
+	i=(*phead)->date;
+	(*phead)->date=_new->date;
+	_new->date=i;//交换两个节点数据上的值
+}
+int main()
+{
+	Pnode* phead;
+	InitList(phead);
+	return 0;
+}
