@@ -258,5 +258,10 @@ void reverse(Pnode phead)//逆序打印
 	}
 	printf("%d",phead->date);
 }
-
+void removeno(Pnode *phead)//删除无头链表的指定节点  参数需要传入当前节点
+{
+	assert((*phead));
+	(*phead)->date=(*phead)->next->date;//将下一节点的值复制到当前节点删除下一节点 即是删除当前节点
+	(*phead)->next=(*phead)->next->next;
+}
 
