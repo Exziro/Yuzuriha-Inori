@@ -28,7 +28,7 @@ DateType Full(Seqlist *seq)//判满
 	else
 		return 0;
 }
-DateType Addspace(Seqlist *seq)
+DateType Addspace(Seqlist *seq)//自动增加上限
 {
 	DateType *newspace;
 	if (Full(seq))
@@ -39,10 +39,11 @@ DateType Addspace(Seqlist *seq)
 	seq->size+=MAX;//增加上限
 
 	}
+		return 0;
 }
 
 
-DateType pushback(Seqlist * seq,DateType _date)
+DateType pushback(Seqlist * seq,DateType _date)//尾插
 {
 	if(Full(seq))
 	{
@@ -228,4 +229,13 @@ int Binaryserch(Seqlist *seq,DateType date)
           s=mid-1;  
 	}
 	return -1;
+}
+/////////////////////////////////////////////////////////////
+int main()
+{
+	Seqlist test;
+//	seqlist*p=test;
+	InitSqlist(&test);
+	pushback(&test,1);
+	return 0;
 }
