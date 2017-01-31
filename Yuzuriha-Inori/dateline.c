@@ -54,10 +54,12 @@ DateType pushback(Seqlist * seq,DateType _date)//Î²²å
 		if(seq->longside==0)
 		{
 			seq->arr[seq->longside]=_date;
+			seq->longside++;
 		}
 		else
 		{
 			seq->arr[seq->longside+1]=_date;
+			seq->longside++;
 		}
 	}
 	return 0;
@@ -230,6 +232,14 @@ int Binaryserch(Seqlist *seq,DateType date)
 	}
 	return -1;
 }
+//void GetElem(Seqlist L,int i,int  *e)
+//{
+////if(L.Len == 0 || i < 1 || i > L.Len)
+////return ERROR;
+////*e = L.Elem[i - 1];
+//	*e = *(L.longside+ i - 1);
+//return OK;
+//}
 /////////////////////////////////////////////////////////////
 int main()
 {
@@ -237,5 +247,15 @@ int main()
 //	seqlist*p=test;
 	InitSqlist(&test);
 	pushback(&test,1);
+	pushback(&test,2);
+	pushback(&test,3);
+	pushback(&test,4);
+	pushback(&test,5);
+	pushback(&test,6);
+	pushback(&test,2);
+	printf("%d\n",test.arr[2]);
+	printf("%d\n",test.arr[3]);
+	printf("%d\n",test.arr[4]);
+	Popback(&test);
 	return 0;
 }
