@@ -16,6 +16,7 @@ void InitList(Pnode* phead)
 }
 void Pushback(Pnode* phead,Datetype data)//尾插
 {
+	Pnode phead1=*phead;
 	Pnode  _new=(Node*)malloc(sizeof(struct Node));
 	//Node * i=(*phead);
 	if(_new==NULL)
@@ -24,17 +25,19 @@ void Pushback(Pnode* phead,Datetype data)//尾插
 	}
 	assert(phead);
 	_new->date=data;
-	if((*phead)->next==NULL)
+	if((phead1)->next==NULL)
 	{
-		(*phead)->next=_new;
+		(phead1)->next=_new;
 		_new->next=NULL;
 	}
-	else
-		while((*phead)->next)
+	else{
+		while(((phead1)->next))
 		{
-			(*phead)=(*phead)->next;
+			(phead1)=(phead1)->next;
 		}
-		(*phead)->next=_new;
+		(phead1)->next=_new;
+		_new->next=NULL;
+}
 }
 void Pusherase(Pnode* phead)//删除尾链表
 {
@@ -278,7 +281,11 @@ void InsertNotTailNode(Pnode *phead,Datetype date)//在无头单链表非头节点前插入新
 }
 int main()
 {
-	Pnode* phead;
-	InitList(phead);
+	Pnode phead;
+	InitList(&phead);
+	Pushback(&phead,1);
+	Pushback(&phead,2);
+	Pushback(&phead,3);
+	Pushback(&phead,4);
 	return 0;
 }
