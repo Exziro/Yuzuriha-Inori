@@ -43,44 +43,47 @@ void Pusherase(Pnode* phead)//删除尾链表
 {
 	//Pnode  _new=(Node*)malloc(sizeof(struct Node));
 	assert(phead);
-	if((*phead)->next==NULL)
+	Pnode phead1=*phead;
+	if((phead1)->next==NULL)
 	{
-		*phead=NULL;
+		phead1=NULL;
 	}
-			while((*phead)->next)
+			while(phead1->next)
 		{
-			(*phead)=(*phead)->next;
+			phead=phead1->next;
 		}
-		(*phead)=NULL;
+		phead1=NULL;
 }
 void PushFront(Pnode * phead,Datetype date)//头插
 {
+	Pnode phead1=*phead;
 	Pnode  _new=(Node*)malloc(sizeof(struct Node));
 		if(_new==NULL)
 	{
 		printf("wrong!!");
 	}
 	_new->date=date;
-	if((*phead==NULL)){
-		(*phead)->date=date;
-		(*phead)->next=NULL;
+	if((phead1==NULL)){
+		phead1->date=date;
+		phead1->next=NULL;
 	}
 	else{
 		_new->next=(*phead)->next;
-		(*phead)->next=_new;
+		phead1->next=_new;
 	}
 }
 //82BEI;61BEI;69BEI;75BEI;103BEI;113BEI
 void Popfront(Pnode *phead)
 {
 	/*Pnode _new;*/
-	assert((*phead));
-	if((*phead)->next==NULL)
+	Pnode phead1=*phead;
+	assert(phead1);
+	if(phead1->next==NULL)
 	{
 		printf("NULL");
 	}
 	//_new=(*phead);
-	(*phead)=(*phead)->next;
+	phead1=phead->next;
 }
 //uwcp15Ats4
 Pnode Find(Pnode phead,Datetype date)
@@ -106,56 +109,59 @@ Pnode Find(Pnode phead,Datetype date)
 void Insert(Pnode*phead,Pnode pos,Datetype date)//插入到pos位置的数据
 {
 	Pnode mid;
+	Pnode phead1=*phead;
 	Pnode  _new=(Node*)malloc(sizeof(struct Node));
-	if((*phead)==NULL)
+	if(phead1==NULL)
 	{
-		_new=(*phead)->next;
+		_new=phead1->next;
 	}
 	else
 	{
-		while((*phead)!=pos)//未判断pos点问题
+		while(phead1!=pos)//未判断pos点问题
 		{
-			(*phead)=(*phead)->next;
+			*phead1=phead1->next;
 		}
-		mid=(*phead)->next;
-		(*phead)->next=_new;
+		mid=phead1->next;
+		phead1->next=_new;
 		_new->next=mid;
 	}
 }
 void Erase(Pnode *phead,Pnode pos)
 {
 	Pnode _new;
-		if((*phead)==NULL)
+	Pnode phead1=*phead;
+		if(phead1==NULL)
 	{
 		printf("NO number!!");
 	}
 	else
 	{
-		while((*phead)!=NULL)//未判断pos点问题
+		while(phead1!=NULL)//未判断pos点问题
 		{
-			_new=(*phead);
-			if(pos==(*phead)){
-				_new->next=(*phead)->next;}
-			(*phead)=(*phead)->next;
+			_new=phead1;
+			if(pos==phead1){
+				_new->next=phead1->next;}
+			phead1=phead1->next;
 
 		}
 		}
 }
 void Remove(Pnode *phead,Datetype date)
 {
+	Pnode phead1=*phead;
 		Pnode _new;
-		if((*phead)==NULL)
+		if(phead1==NULL)
 	{
 		printf("NO number!!");
 	}
 	else
 	{
-		while((*phead)!=NULL)
+		while( phead1!=NULL)
 		{
-			_new=(*phead);
-			if(date==(*phead)->date){
-				_new->next=(*phead)->next;}
-			(*phead)=(*phead)->next;
+			_new= phead1;
+			if(date==  phead1->date){
+				_new->next= phead1->next;}
+			 phead1= phead1->next;
 			break;//找到后直接跳出
 
 		}
@@ -164,19 +170,20 @@ void Remove(Pnode *phead,Datetype date)
 
 void Removeall(Pnode *phead,Datetype date)
 {
+	Pnode phead1=*phead;
 		Pnode _new;
-		if((*phead)==NULL)
+		if( phead1==NULL)
 	{
 		printf("NO number!!");
 	}
 	else
 	{
-		while((*phead)!=NULL)
+		while( phead1 !=NULL)
 		{
-			_new=(*phead);
-			if(date==(*phead)->date){
-				_new->next=(*phead)->next;}
-			(*phead)=(*phead)->next;
+			_new= phead1;
+			if(date== phead1->date){
+				_new->next= phead1->next;}
+			 phead1= phead1->next;
 
 		}
 		}
