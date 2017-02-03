@@ -278,12 +278,13 @@ void	DeletNotTailNode(Pnode *phead)//É¾³ıÎŞÍ·Á´±íµÄÖ¸¶¨½Úµã  ²ÎÊıĞèÒª´«Èëµ±Ç°½Úµ
 void InsertNotTailNode(Pnode *phead,Datetype date)//ÔÚÎŞÍ·µ¥Á´±í·ÇÍ·½ÚµãÇ°²åÈëĞÂ½Úµã
 {
 	Pnode _new;
+	Pnode phead1=*phead;
 	Datetype i=0;
 	_new->date=date;
-	_new->next=(*phead)->next;
-	(*phead)->next=_new;//½«ĞÂ½Úµã²åÈëµ½µ±Ç°½ÚµãµÄÏÂÒ»¸ö½Úµã
-	i=(*phead)->date;
-	(*phead)->date=_new->date;
+	_new->next=phead1->next;
+	phead1->next=_new;//½«ĞÂ½Úµã²åÈëµ½µ±Ç°½ÚµãµÄÏÂÒ»¸ö½Úµã
+	i=phead1->date;
+	phead1->date=_new->date;
 	_new->date=i;//½»»»Á½¸ö½ÚµãÊı¾İÉÏµÄÖµ
 }
 int main()
