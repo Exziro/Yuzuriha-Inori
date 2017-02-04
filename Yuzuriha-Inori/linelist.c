@@ -42,7 +42,7 @@ void Pushback(Pnode* phead,Datetype data)//尾插
 void Pusherase(Pnode* phead)//删除尾链表
 {
 	//Pnode  _new=(Node*)malloc(sizeof(struct Node));
-	assert(phead);
+	//assert(phead);
 	Pnode phead1=*phead;
 	if((phead1)->next==NULL)
 	{
@@ -50,7 +50,7 @@ void Pusherase(Pnode* phead)//删除尾链表
 	}
 			while(phead1->next)
 		{
-			phead=phead1->next;
+			phead1=phead1->next;
 		}
 		phead1=NULL;
 }
@@ -83,7 +83,7 @@ void Popfront(Pnode *phead)
 		printf("NULL");
 	}
 	//_new=(*phead);
-	phead1=phead->next;
+	phead1=phead1->next;
 }
 //uwcp15Ats4
 Pnode Find(Pnode phead,Datetype date)
@@ -106,8 +106,9 @@ Pnode Find(Pnode phead,Datetype date)
 	}
 	printf("this date is not live");
 }
-void Insert(Pnode*phead,Pnode pos,Datetype date)//插入到pos位置的数据
+void Insert(Pnode*phead,int pos,Datetype date)//插入到pos位置的数据
 {
+	int i=0;
 	Pnode mid;
 	Pnode phead1=*phead;
 	Pnode  _new=(Node*)malloc(sizeof(struct Node));
@@ -117,17 +118,19 @@ void Insert(Pnode*phead,Pnode pos,Datetype date)//插入到pos位置的数据
 	}
 	else
 	{
-		while(phead1!=pos)//未判断pos点问题
+		while(i==pos)//未判断pos点问题
 		{
-			*phead1=phead1->next;
+			i++;
+			phead1=phead1->next;
 		}
 		mid=phead1->next;
 		phead1->next=_new;
 		_new->next=mid;
 	}
 }
-void Erase(Pnode *phead,Pnode pos)
+void Erase(Pnode *phead,int pos)//删除指定节点
 {
+	int i=0;
 	Pnode _new;
 	Pnode phead1=*phead;
 		if(phead1==NULL)
@@ -139,7 +142,8 @@ void Erase(Pnode *phead,Pnode pos)
 		while(phead1!=NULL)//未判断pos点问题
 		{
 			_new=phead1;
-			if(pos==phead1){
+			if(pos==i){
+				i++;
 				_new->next=phead1->next;}
 			phead1=phead1->next;
 
@@ -293,7 +297,15 @@ int main()
 	InitList(&phead);
 	Pushback(&phead,1);
 	Pushback(&phead,2);
-	Pushback(&phead,3);
+	Pushback(&phead,2);
 	Pushback(&phead,4);
+	Pusherase(&phead);
+	PushFront(&phead,5);
+	Popfront(&phead);
+	Insert(&phead,3,66);
+	Erase(&phead, 3);
+	Remove(&phead,2);
+	Removeall(&phead,2);
+	size(phead);
 	return 0;
 }
