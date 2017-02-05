@@ -44,15 +44,18 @@ void Pusherase(Pnode* phead)//删除尾链表
 	//Pnode  _new=(Node*)malloc(sizeof(struct Node));
 	//assert(phead);
 	Pnode phead1=*phead;
+	Pnode phead2=NULL;
 	if((phead1)->next==NULL)
 	{
 		phead1=NULL;
 	}
 			while(phead1->next)
 		{
+			phead2=phead1;
 			phead1=phead1->next;
 		}
-		phead1=NULL;
+			phead2->next=NULL;
+		free(phead1);
 }
 void PushFront(Pnode * phead,Datetype date)//头插
 {
@@ -76,14 +79,16 @@ void PushFront(Pnode * phead,Datetype date)//头插
 void Popfront(Pnode *phead)
 {
 	/*Pnode _new;*/
-	Pnode phead1=*phead;
-	assert(phead1);
-	if(phead1->next==NULL)
+	//Pnode phead2=NULL;
+	//Pnode phead1=*phead;
+	assert(phead);
+	if((*phead)->next==NULL)
 	{
 		printf("NULL");
 	}
 	//_new=(*phead);
-	phead1=phead1->next;
+	(*phead)=(*phead)->next;
+	(*phead)=(*phead)->next;//此处使用两次是因为头指针被当成一个无值节点
 }
 //uwcp15Ats4
 Pnode Find(Pnode phead,Datetype date)
