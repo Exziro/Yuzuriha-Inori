@@ -117,6 +117,7 @@ void Insert(Pnode*phead,int pos,Datetype date)//插入到pos位置的数据
 	Pnode mid;
 	Pnode phead1=*phead;
 	Pnode  _new=(Node*)malloc(sizeof(struct Node));
+	_new->date=date;
 	if(phead1==NULL)
 	{
 		_new=phead1->next;
@@ -135,7 +136,7 @@ void Insert(Pnode*phead,int pos,Datetype date)//插入到pos位置的数据
 }
 void Erase(Pnode *phead,int pos)//删除指定节点
 {
-	int i=0;
+	int i=1;
 	Pnode _new;
 	Pnode phead1=*phead;
 		if(phead1==NULL)
@@ -146,10 +147,12 @@ void Erase(Pnode *phead,int pos)//删除指定节点
 	{
 		while(phead1!=NULL)//未判断pos点问题
 		{
+			i++;
 			_new=phead1;
 			if(pos==i){
-				i++;
-				_new->next=phead1->next;}
+				phead1=phead1->next;
+				_new->next=phead1;
+			break;}
 			phead1=phead1->next;
 
 		}
@@ -314,3 +317,6 @@ int main()
 	size(phead);
 	return 0;
 }
+//uwcp15Ats4
+//ZfBMFP4gxg
+//761832
