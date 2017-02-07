@@ -145,18 +145,21 @@ void Erase(Pnode *phead,int pos)//删除指定节点
 	}
 	else
 	{
-		while(phead1!=NULL)//未判断pos点问题
+		while(phead1!=NULL&&(pos==i+1))//未判断pos点问题
 		{
-			i++;
-			_new=phead1;
-			if(pos==i){
-				phead1=phead1->next;
-				_new->next=phead1;
-			break;}
+			//_new=phead1;
+			//if(pos==i){
+			//	phead1=phead1->next;
+			//	_new->next=phead1;
+			//break;}
 			phead1=phead1->next;
-
+			i++;
 		}
-		}
+		_new=phead1->next;
+		phead1->next=_new->next;
+		free(_new);
+	
+	}
 }
 void Remove(Pnode *phead,Datetype date)
 {
@@ -172,9 +175,13 @@ void Remove(Pnode *phead,Datetype date)
 		{
 			_new= phead1;
 			if(date==  phead1->date){
-				_new->next= phead1->next;}
-			 phead1= phead1->next;
+		_new=phead1->next;
+		phead1->next=_new->next;
+		free(_new);
 			break;//找到后直接跳出
+				}
+			 phead1= phead1->next;
+			
 
 		}
 		}
@@ -194,8 +201,9 @@ void Removeall(Pnode *phead,Datetype date)
 		{
 			_new= phead1;
 			if(date== phead1->date){
-				_new->next= phead1->next;}
-			 phead1= phead1->next;
+			_new=phead1->next;
+		phead1->next=_new->next;
+		free(_new);
 
 		}
 		}
