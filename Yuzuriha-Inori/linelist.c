@@ -207,6 +207,7 @@ void Removeall(Pnode *phead,Datetype date)
 
 		}
 		}
+		}
 }
 //xbnyzxkl0308
 //	QQ340032071
