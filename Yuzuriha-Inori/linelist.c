@@ -190,6 +190,7 @@ void Remove(Pnode *phead,Datetype date)
 void Removeall(Pnode *phead,Datetype date)
 {
 	Pnode phead1=*phead;
+	Pnode phead2=*phead;
 		Pnode _new;
 		if( phead1==NULL)
 	{
@@ -199,13 +200,20 @@ void Removeall(Pnode *phead,Datetype date)
 	{
 		while( phead1 !=NULL)
 		{
+			phead2=phead1;
 			_new= phead1;
-			if(date== phead1->date){
+			if(date== phead1->date&&(phead1->next!=NULL)){
 			_new=phead1->next;
 		phead1->next=_new->next;
 		free(_new);
 
 		}
+			else{
+				phead2->next=NULL;
+			}
+		phead1= phead1->next;
+	
+			
 		}
 		}
 }
@@ -213,10 +221,10 @@ void Removeall(Pnode *phead,Datetype date)
 //	QQ340032071
 int size(Pnode phead)//链表的大小
 {
-	int n=0;
+	int n=1;
 	if(phead->next==NULL)
 	{
-		return 0;
+		return 1;
 	}
 	else
 	{
@@ -310,6 +318,7 @@ void InsertNotTailNode(Pnode *phead,Datetype date)//在无头单链表非头节点前插入新
 }
 int main()
 {
+	int i=0;
 	Pnode phead;
 	InitList(&phead);
 	Pushback(&phead,1);
@@ -322,10 +331,15 @@ int main()
 	Insert(&phead,3,66);
 	Erase(&phead, 3);
 	Remove(&phead,2);
+	Pushback(&phead,2);
+	Pushback(&phead,2);
+	Pushback(&phead,2);
 	Removeall(&phead,2);
-	size(phead);
+	i=size(phead);
 	return 0;
 }
 //uwcp15Ats4
 //ZfBMFP4gxg
 //761832
+//Gc99tJ2pkw
+//800021
