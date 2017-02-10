@@ -336,6 +336,8 @@ int main()
 	Pushback(&phead,2);
 	Removeall(&phead,2);
 	i=size(phead);
+	last(phead);
+	i=empty(phead);
 	return 0;
 }
 //uwcp15Ats4
