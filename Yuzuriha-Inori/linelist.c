@@ -337,6 +337,7 @@ int main()
 	Removeall(&phead,2);
 	i=size(phead);
 	last(phead);
+	InsertNotTailNode(&phead,5);
 	//i=empty(phead);
 	return 0;
 }
