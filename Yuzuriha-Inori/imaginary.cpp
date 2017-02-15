@@ -48,7 +48,8 @@
         std::cout << rhs.imag << "i";  
         return output;  
     }  
-    int main() {  
+int main() 
+{  
         my_complex c1(1, 5);  
         my_complex c2(c1); //µÈ¼ÛÓÚ my_complex c2 = c1;  
         my_complex c3(2, 3);  
@@ -58,4 +59,4 @@
         cout << c2 << endl;  
         cout << c3 << endl;  
         cout << flag << endl;  
-    }  
+}  
