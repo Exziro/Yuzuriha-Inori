@@ -42,7 +42,7 @@ public:
 	void PopBack()
 	{
 		if(IsEmpty()){
-			cout<<"the Capacity is empty"<<enl;
+			cout<<"the Capacity is empty"<<endl;
 		}
 		else
 			_size--;
@@ -94,7 +94,14 @@ public:
 		}
 	}
 	size_t Capacity()const;
-	bool Empty()const;
+	bool Empty()const
+	{
+		if(_size==0)
+			return 1;
+		else
+			return 0;
+	}
+
 	DataType& Front()
 	{
 		return _pData[0];
@@ -103,14 +110,40 @@ public:
 	{
 		return _pData[0];
 	}
-	DataType& Back();
-	const DataType& Back()const;
-	void Assign(size_t n, const DataType& data = DataType());
-	DataType& operator[](size_t index);
-	const DataType& operator[](size_t index)const;
-	DataType& At(size_t index);
-	const DataType& At(size_t index)const;
-
+	DataType& Back()
+	{
+		int n=0;
+		while(_size!=n)
+		{
+			if(_pData[n]!=0){
+				n++;
+			}
+		}
+		return _pData[n];
+	}
+	const DataType& Back()const
+	{
+		int n=0;
+		while(_size!=n)
+		{
+			if(_pData[n]!=0){
+				n++;
+			}
+		}
+		return _pData[n];
+	}
+	DataType& operator[](size_t index)
+{  
+        if(index < _size)  
+        {  
+            return _pData[index];  
+        }  
+    } 
+	const DataType& operator[](size_t index)const
+	{
+		
+			return _pData[index];
+    }
 	private:
 		void _CheckCapacity();
 		    bool IsFull()  
