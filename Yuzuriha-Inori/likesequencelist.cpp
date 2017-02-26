@@ -153,13 +153,13 @@ public:
         else  
             return false;  
     }  
-    bool IsEmpty()  
-    {  
-        if (_size == 0)  
-            return true;  
-        else  
-            return false;  
-    }  
+    //bool IsEmpty()  
+    //{  
+    //    if (_size == 0)  
+    //        return true;  
+    //    else  
+    //        return false;  
+    //}  
 	friend std::ostream& operator<<(std::ostream& _cout, const Vector& v);
 private:
 	DataType* _pData;
