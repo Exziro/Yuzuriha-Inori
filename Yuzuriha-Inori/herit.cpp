@@ -14,7 +14,7 @@ public:
 	}
 	int _a;
 };
-class B:virtual public A
+class B:virtual  public A
 {
 	public:
 	B()
@@ -42,7 +42,7 @@ class C:virtual public A
 	}
 	int _c;
 };
-class D:public B,public C
+class D:public C,public B
 {
 	public:
 	D()
@@ -63,7 +63,8 @@ int main()
 	d._b=2;
 	d._c=3;
 	d._d=4;
-	cout<<d._a<<endl;
+	//cout<<d._a<<endl;
+	//cout<<sizeof(d)<<endl;
 	system("pause");
 	return 0;
 }
