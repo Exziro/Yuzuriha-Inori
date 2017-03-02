@@ -45,16 +45,16 @@ public:
  
 
  
-
-class Derive : public Base1, public Base2, public Base3 {
-
-public:
-
-            virtual void f() { cout << "Derive::f" << endl; }
-
-            virtual void g1() { cout << "Derive::g1" << endl; }
-
-};
+//
+//class Derive : public Base1, public Base2, public Base3 {
+//
+//public:
+//
+//            virtual void f() { cout << "Derive::f" << endl; }
+//
+//            virtual void g1() { cout << "Derive::g1" << endl; }
+//
+//};
 
  
 
