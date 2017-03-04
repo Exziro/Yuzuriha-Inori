@@ -207,56 +207,60 @@
 //}
 #include<iostream>
 using namespace std;
-class Base1 {
+class A {
+
+public:
+
+            virtual void f() { cout << "A::f" << endl; }
+			int a;
+            //virtual void g1() { cout << "A::g" << endl; }
+           // virtual void h() { cout << "A::h" << endl; }
+ 
+
+};
+class Base1:virtual public A
+{
 
 public:
 
             virtual void f() { cout << "Base1::f" << endl; }
-
-            void g1() { cout << "Base1::g" << endl; }
-
-            void h() { cout << "Base1::h" << endl; }
-			~Base1()
-			{
-				cout<<"base 1"<<endl;
-			}
-				
+			int a;
+            virtual void g1() { cout << "Base1::g" << endl; }
+            virtual void h() { cout << "Base1::h" << endl; }
  
 
 };
-class Derive : public Base1//, public Base2, public Base3 {
+class Base2:virtual public A 
+{
+
+public:
+
+            virtual void f() { cout << "Base2::f" << endl; }
+			int a;
+            virtual void g1() { cout << "Base2::g" << endl; }
+            virtual void h() { cout << "Base2::h" << endl; }
+ 
+
+};
+class Derive : public Base1,public Base2
 {
 public:
 
-            virtual  void f() { cout << "Derive::f" << endl; }
-
-            virtual void g1() { cout << "Derive::g1" << endl; }
-			~Derive()
-			{
-				cout<<"Derive"<<endl;
-			}
+             void f() { cout << "Derive::f" << endl; }
+			 void g1() { cout << "Derive::g" << endl; }
+             //void h() { cout << "Derive::h" << endl; }
+			 int b;
 };
-void f(Base1&b)
-{
-	b.f();
-    b.g1();
-}
-
- 
 
 typedef void(*Fun)(void);
-
- 
-
 int main()
 
 {
-	Base1 *p=new Derive;
-	delete p;
-	//Derive d;
-	//Base1 b1;
-	//f(d);
-	//f(b1);
+	Base1 b1;
+	b1.a=1;
+	Derive D;
+	D.b=2;
+
         
  system("pause");
            return 0;
