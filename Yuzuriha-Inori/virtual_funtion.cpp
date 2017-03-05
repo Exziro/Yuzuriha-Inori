@@ -224,7 +224,7 @@ class Base1:virtual public A
 public:
 
             virtual void f() { cout << "Base1::f" << endl; }
-			int a;
+			int b1;
             virtual void g1() { cout << "Base1::g" << endl; }
             virtual void h() { cout << "Base1::h" << endl; }
  
@@ -236,7 +236,7 @@ class Base2:virtual public A
 public:
 
             virtual void f() { cout << "Base2::f" << endl; }
-			int a;
+			int b2;
             virtual void g1() { cout << "Base2::g" << endl; }
             virtual void h() { cout << "Base2::h" << endl; }
  
@@ -246,9 +246,9 @@ class Derive : public Base1,public Base2
 {
 public:
 
-             void f() { cout << "Derive::f" << endl; }
-			 void g1() { cout << "Derive::g" << endl; }
-             //void h() { cout << "Derive::h" << endl; }
+             virtual void f() { cout << "Derive::f" << endl; }
+			 virtual void g1() { cout << "Derive::g" << endl; }
+              void h() { cout << "Derive::h" << endl; }
 			 int b;
 };
 
@@ -259,7 +259,7 @@ int main()
 	Base1 b1;
 	b1.a=1;
 	Derive D;
-	D.b=2;
+	D.a=2;
 
         
  system("pause");
