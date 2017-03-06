@@ -223,11 +223,13 @@ class Base1:virtual public A
 
 public:
 
+			Base1()
+			{}
             virtual void f() { cout << "Base1::f" << endl; }
 			int b1;
             virtual void g1() { cout << "Base1::g" << endl; }
             virtual void h() { cout << "Base1::h" << endl; }
- 
+			~Base1();
 
 };
 class Base2:virtual public A 
