@@ -213,8 +213,8 @@ public:
 
             virtual void f() { cout << "A::f" << endl; }
 			int a;
-            //virtual void g1() { cout << "A::g" << endl; }
-           // virtual void h() { cout << "A::h" << endl; }
+            virtual void g1() { cout << "A::g" << endl; }
+            virtual void h() { cout << "A::h" << endl; }
  
 
 };
