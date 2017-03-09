@@ -9,6 +9,7 @@ int main()
 {
 	cout<<Add(10,20)<<endl;
 	cout<<Add(1.0,2.0)<<endl;
+	cout<<Add('1','2')<<endl;
 	system("pause");
 	return 0;
 	
