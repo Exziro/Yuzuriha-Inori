@@ -14,3 +14,5 @@ int main()
 	return 0;
 	
 }
+typedef int DataType;
+//typedef char DataType; class SeqList { private :          DataType* _data ;     int _size ;     int _capacity ; }
