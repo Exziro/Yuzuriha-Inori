@@ -5,6 +5,8 @@ T Add(T left,T right)
 {
 	return (right+left);
 }
+template<>
+int Add(int left,int right);//ÌØ»¯
 int main()
 {
 	cout<<Add(10,20)<<endl;
@@ -15,4 +17,5 @@ int main()
 	
 }
 typedef int DataType;
-//typedef char DataType; class SeqList { private :          DataType* _data ;     int _size ;     int _capacity ; }
+
+
