@@ -49,18 +49,16 @@ public:
 	/////////////////////Capacity//////////////////////
 	SizeType Capacity()const
 	{
-		return (SizeType(-1)/sizeof(T));
+		return (_endOfStorage-_start);
 	}
 	SizeType Size()const
 	{
-		int i=0;
-		while(_start!=_end)
-		{
-			i++;
-		}
-		return i;
+		return(_endOfStorage-_start)
 	}
-	SizeType MaxSize()const;
+	SizeType MaxSize()const
+	{
+		return (_end-_start);
+	}
 	bool Empty()const
 	{
 		if(_stat==_end)
@@ -71,19 +69,48 @@ public:
 	}
 
         //////////////Acess/////////////////////
-	Reference operator[](size_t index);
-	ConstReference operator[](size_t index)const;
+	Reference operator[](size_t index)
+	{
+		return _start[index];
+	}
+	ConstReference operator[](size_t index)const
+	{
+		return const _start[index];
+	}
 	Reference Front()
-    ConstReference Front()const;
-	Reference Back();
-	ConstReference Front()const;
-
+	{
+		return Begin();
+	}
+    ConstReference Front()const
+	{
+		return Begin();
+	}
+	Reference Back()
+	{
+		return End();
+	}
+	ConstReference Back()const
+	{
+		return End();
+	}
 
 	/////////////Iterator//////////////////
-	Iterator Begin();
-	ConstIterator Begin()const;
-	Iterator End();
-	ConstIterator End()const;
+	Iterator Begin()
+	{
+		rerturn _start;
+	}
+	ConstIterator Begin()const
+	{
+		rerturn _start;
+	}
+	Iterator End()
+	{
+		return _end;
+	}
+	ConstIterator End()const
+	{
+		return _end;
+	}
 
         //////////////Modify///////////////////
 	void PushBack(const T& value);
@@ -95,8 +122,18 @@ public:
         // É¾³ýpositionÎ»ÖÃµÄÔªËØ
 	Iterator Erase(Iterator position);
 protected:
-	void FillAndInit(SizeType n, const T& value);
-        void CheckCapacity();
+	void FillAndInit(SizeType n, const T& value)
+	{
+		Iterator temp=_start;
+		while(_temp!=_end)
+		{
+		   (*_temp)=0;
+		   temp++;
+		}
+	}
+    void CheckCapacity()
+	{
+
 protected:
 	Iterator _start;
 	Iterator _end;
