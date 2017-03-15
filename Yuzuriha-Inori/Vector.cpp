@@ -117,10 +117,28 @@ public:
 	void PopBack();
 
 	// 在position位置插入元素data
-	Iterator Insert(Iterator position, const T& data);
-        
+	Iterator Insert(Iterator position, const T& data)
+	{
+		CheckCapacity();
+		Iterator temp =end();
+		for(temp=end(),temp!=position,temp--)
+		{
+			*temp=*(temp);
+		}
+		*position=data;
+		return _start;
+	}
         // 删除position位置的元素
-	Iterator Erase(Iterator position);
+	Iterator Erase(Iterator position)
+	{
+		Iterator temp=position;
+		for(temp=position,temp!=_end,temp++)
+		{
+			*temp=*(temp+1);
+		}
+		return _start;
+	}
+
 protected:
 	void FillAndInit(SizeType n, const T& value)
 	{
@@ -133,6 +151,18 @@ protected:
 	}
     void CheckCapacity()
 	{
+		if(_end==__endOfStorage)
+		{
+			Iterator new_start= new T[2*Size()];
+			Iterator new_end=new_start+size();
+			memccpy(new_start,_start,Size()*sizeof(T));
+			delete _start;
+			_start=new_start;
+			_end=new_end;
+			_endOfStorage=_start+2*size();
+		}
+	}
+
 
 protected:
 	Iterator _start;
