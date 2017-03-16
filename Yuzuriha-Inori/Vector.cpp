@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+#include<string.h>
 
 template<class T>
 class Vector
@@ -17,10 +18,13 @@ public:
 
 public:
 	Vector()
-		: _start(0)
-		, _end(0)
-		, _endOfStorage(0)
-	{}
+		//: _start(0)
+		//, _end(0)
+		//, _endOfStorage(0)
+	{_start=0;
+	 _end=0;
+	 _endOfStorage=0;
+	}
 
 	Vector(SizeType n, const T& value)
 	{
@@ -43,7 +47,8 @@ public:
 	}
 
 	Vector<T>& operator=(const Vector<T>& v);
-	~Vector();
+	~Vector()
+	{};
 
 
 	/////////////////////Capacity//////////////////////
@@ -53,7 +58,7 @@ public:
 	}
 	SizeType Size()const
 	{
-		return(_endOfStorage-_start)
+		return(_endOfStorage-_start);
 	}
 	SizeType MaxSize()const
 	{
@@ -113,17 +118,24 @@ public:
 	}
 
         //////////////Modify///////////////////
-	void PushBack(const T& value);
-	void PopBack();
+	void PushBack(const T& value)
+	{
+		Insert(End(),value);
+	}
+
+	void PopBack()
+	{
+		Erase(End());
+	}
 
 	// 在position位置插入元素data
 	Iterator Insert(Iterator position, const T& data)
 	{
 		CheckCapacity();
-		Iterator temp =end();
-		for(temp=end(),temp!=position,temp--)
+		Iterator temp =End();
+		for(temp=End();temp!=position;temp--)
 		{
-			*temp=*(temp);
+			*temp=*(temp-1);
 		}
 		*position=data;
 		return _start;
@@ -151,15 +163,15 @@ protected:
 	}
     void CheckCapacity()
 	{
-		if(_end==__endOfStorage)
+		if(_end==_endOfStorage)
 		{
-			Iterator new_start= new T[2*Size()];
-			Iterator new_end=new_start+size();
-			memccpy(new_start,_start,Size()*sizeof(T));
+			Iterator new_start= new T[2*Size()+1];
+			Iterator new_end=new_start+Size();
+			memcpy(new_start,_start,Size()*sizeof(T));
 			delete _start;
 			_start=new_start;
 			_end=new_end;
-			_endOfStorage=_start+2*size();
+			_endOfStorage=_start+2*Size();
 		}
 	}
 
@@ -170,3 +182,12 @@ protected:
 	Iterator _endOfStorage;
 
 };
+int main()
+{
+	Vector<int> b;
+	b.PushBack(2);
+
+	system("pause");
+	return 0;
+}
+
