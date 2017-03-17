@@ -186,6 +186,8 @@ int main()
 {
 	Vector<int> b;
 	b.PushBack(2);
+	b.PushBack(3);
+	b.PushBack(4);
 
 	system("pause");
 	return 0;
