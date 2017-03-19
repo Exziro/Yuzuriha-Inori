@@ -56,8 +56,3 @@ struct TypeTraists<bool>
 	typedef _FalseType _IsPODType;
 
 	};
-struct TypeTraists<bool>
-{
-	typedef _FalseType _IsPODType;
-
-	};
