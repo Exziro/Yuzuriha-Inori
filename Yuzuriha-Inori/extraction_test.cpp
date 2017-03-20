@@ -46,12 +46,12 @@ struct TypeTraists<unsigned short>
 	typedef _FalseType _IsPODType;
 
 	};
-struct TypeTraists<bool>
+struct TypeTraists<int>
 {
 	typedef _FalseType _IsPODType;
 
 	};
-struct TypeTraists<bool>
+struct TypeTraists<unsigned int>
 {
 	typedef _FalseType _IsPODType;
 
