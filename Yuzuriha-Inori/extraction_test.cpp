@@ -56,3 +56,13 @@ struct TypeTraists<unsigned int>
 	typedef _FalseType _IsPODType;
 
 	};
+struct TypeTraists<double>
+{
+	typedef _FalseType _IsPODType;
+
+};
+struct TypeTraists<unsigned double>
+{
+	typedef _FalseType _IsPODType;
+
+}
