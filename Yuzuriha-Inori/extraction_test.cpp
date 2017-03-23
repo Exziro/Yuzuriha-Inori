@@ -90,9 +90,9 @@ void Copy(const T* src,T* dst,size_t size _FALSE Type)
 	}
 }
 template<class T>
-void Copy(const T* src,T* dst,size_t size _FALSE Type)
-{
-	cout<<"_FalseType:"<<typeid(T).name()<<endl;
-	memccpy(dst,src,size*sizeof(T));
-
-}
+//void Copy(const T* src,T* dst,size_t size _FALSE Type)
+//{
+//	cout<<"_FalseType:"<<typeid(T).name()<<endl;
+//	memccpy(dst,src,size*sizeof(T));
+//
+//}
