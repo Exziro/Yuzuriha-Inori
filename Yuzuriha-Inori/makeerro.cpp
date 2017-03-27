@@ -22,18 +22,18 @@ int main()
 		Funtest2();
 		Funtest3();
 	}
-//	else
-//	{
-//		switch (istate)
-//		{
-//		case 1:cout<<"Funtest1 Erro"<<endl;
-//		break;
-//		case 2:cout<<"Funtest2 Erro"<<endl;
-//		break;		
-//		case 3:cout<<"Funtest3 Erro"<<endl;
-//		}
-//		
-//	}
-//	cout<<"main End"<<endl;
-//	return 0;
-//}
+	else
+	{
+		switch (istate)
+		{
+		case 1:cout<<"Funtest1 Erro"<<endl;
+		break;
+		case 2:cout<<"Funtest2 Erro"<<endl;
+		break;		
+		case 3:cout<<"Funtest3 Erro"<<endl;
+		}
+		
+	}
+	cout<<"main End"<<endl;
+	return 0;
+}
