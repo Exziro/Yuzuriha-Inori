@@ -9,10 +9,10 @@ void Funtest2()
 {
 	longjmp(mark,2);
 }
-void Funtest3()
-{
-	longjmp(mark,3);
-}
+//void Funtest3()
+//{
+//	longjmp(mark,3);
+//}
 int main()
 {
 	int istate = setjmp(mark);
