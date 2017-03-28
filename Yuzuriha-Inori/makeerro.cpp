@@ -5,10 +5,10 @@ void Funtest1()
 {
 	longjmp(mark,1);
 }
-void Funtest2()
-{
-	longjmp(mark,2);
-}
+//void Funtest2()
+//{
+//	longjmp(mark,2);
+//}
 //void Funtest3()
 //{
 //	longjmp(mark,3);
