@@ -21,7 +21,7 @@ int main()
 		Funtest1();
 		Funtest2();
 		Funtest3();
-		Funtest3();
+		
 	}
 	else
 	{
