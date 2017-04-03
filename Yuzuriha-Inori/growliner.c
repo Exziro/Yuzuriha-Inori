@@ -6,7 +6,7 @@ int main()
 	bar[0]=0;
 	while(i<=100)
 	{
-		printf("[%s]\r",bar);
+		printf("[%s][-][/][/]\r",bar);
 		fflush(stdout);
 		bar[i]='*';
 		i++;
