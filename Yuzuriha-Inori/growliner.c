@@ -4,6 +4,7 @@ int main()
 {
 	int i=0;
 	char bar[102];
+	memset(bar,0,102*sizeof(char));
 	bar[0]=0;
 	while(i<=100)
 	{
