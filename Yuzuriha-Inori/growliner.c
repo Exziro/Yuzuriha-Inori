@@ -12,7 +12,7 @@ int main()
 		fflush(stdout);
 		bar[i]='*';
 		i++;
-		/*bar[i]=0;*/
+		bar[i]=0;
 	}
 	return 0;
 }
