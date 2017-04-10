@@ -8,8 +8,8 @@ int main()
 	bar[0]=0;
 	while(i<=100)
 	{
-		printf("[%s][-][/][/]\r",bar);
-		fflush(stdout);
+		printf("[%s][-][/][/]\r",bar);//进行行刷新
+		fflush(stdout);//利用刷新机制
 		bar[i]='*';
 		i++;
 		bar[i]=0;
