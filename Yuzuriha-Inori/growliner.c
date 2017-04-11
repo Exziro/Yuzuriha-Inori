@@ -10,7 +10,7 @@ int main()
 	{
 		printf("[%s][-][/][/]\r",bar);//进行行刷新
 		fflush(stdout);//利用刷新机制
-		bar[i]='*';
+		bar[i]='*';//Tianchong
 		i++;
 		bar[i]=0;
 	}
