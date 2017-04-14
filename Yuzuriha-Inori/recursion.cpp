@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-int Fib(int Fisrt,int second,int n)
+int Fib(int Fisrt,int second,int n)//斐波那契数列递归形势
 {
 	if(n<3)
 	{
