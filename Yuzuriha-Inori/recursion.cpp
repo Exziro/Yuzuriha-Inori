@@ -12,4 +12,14 @@ int Fib(int Fisrt,int second,int n)//斐波那契数列递归形势
 	}
 	return Fib(second,Fisrt+second,n-1);
 }
-
+typedef int node;
+void reverseprintf(int a)
+{
+	a=a->next;
+	while(a)
+	{
+		reverseprintf(a);
+		cout<<a<<endl;
+	}
+	
+}
