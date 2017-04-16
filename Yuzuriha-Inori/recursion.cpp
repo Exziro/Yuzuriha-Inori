@@ -23,3 +23,18 @@ void reverseprintf(int a)
 	}
 	
 }
+int BinSearch(int Array[],int low,int high,int key)  
+{  
+       if (low<=high)  
+       {  
+            int mid = (low+high)/2;  
+            if(key == Array[mid])  
+                return mid;  
+            else if(key<Array[mid])  
+                return BinSearch(Array,low,mid-1,key);  
+            else if(key>Array[mid])  
+                return BinSearch(Array,mid+1,high,key);  
+        }  
+        else  
+            return -1;  
+}  
