@@ -23,7 +23,7 @@ void reverseprintf(int a)
 	}
 	
 }
-int BinSearch(int Array[],int low,int high,int key)  
+int BinSearch(int Array[],int low,int high,int key)  //erfen
 {  
        if (low<=high)  
        {  
