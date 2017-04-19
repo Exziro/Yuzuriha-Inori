@@ -26,3 +26,14 @@ void printfreverse(int *arry,int size,int N)
 		}
 	}
 }
+int main()
+{
+	int arr[3];
+	arr[1]=1;
+	arr[2]=3;
+	arr[0]=2;
+	arr[3]=4;
+	printfreverse(arr,4,3);
+	return 0;
+}
+
