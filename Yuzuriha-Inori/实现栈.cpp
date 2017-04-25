@@ -58,6 +58,6 @@ private:
 	}
 private:
 	T* _pData;
-	//size_t _capacity;
-	//size_t _size;
+	size_t _capacity;
+	size_t _size;
 };
