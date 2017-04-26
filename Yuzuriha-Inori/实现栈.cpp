@@ -50,7 +50,7 @@ private:
 			_pData=tmp；
 			// 释放旧空间
 
-			// 指向新空间
+			 指向新空间
 
 			_capacity *= 2;
 
