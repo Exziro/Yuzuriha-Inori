@@ -4,6 +4,8 @@ template<class T>
 class Stack
 {
 public:
+	Stack();
+	
 	Stack(size_t capacity = 10);
     Stack(const Stack<T>& s);
     Stack<T>& operator=(const Stack<T>& s);
@@ -17,9 +19,9 @@ public:
 	{
 		return _pData[_size];
 	}
-	void add()
-	{
-	}
+	void add(char *exp);
+	//{
+	//}
 	void Pop()
 	{
 		_CheakCapacity();
@@ -34,7 +36,13 @@ public:
 		return _pData[0];
 	}
 	const T& Top()const;
-	bool Empty()const;
+	bool Empty()const
+	{
+		if(_size==0)
+			return 1;
+		else 
+			return 0;
+	}
 private:
 	void _CheckCapacity()
 	{
@@ -66,3 +74,32 @@ private:
 	size_t _capacity;
 	size_t _size;
 };
+template<typename T>
+void  Stack<T>::add(char *exp)
+{
+	int i=0;
+	int j=0;
+	while(exp[i]!='\0')
+	{
+		if(exp[i]>='0' &&exp[i]<='9')  //如果是数字字符串就保存到后缀表达式字符串中  
+        {  
+            _pData[j++] = exp[i];  
+        }
+		else if(exp[i] == '+' || exp[i] == '-')   //如果是操作符 
+        {  
+            while(_pData.empty() == false)  
+            {  
+                char ch = s.Top();  
+                if(ch == '+'||ch == '-'||ch == '/'||ch == '*')  
+                {  
+  
+                   t[j++] = s.top();  
+                   s.pop();  
+                }  
+                else  
+                    break;  
+            }  
+            s.Push(exp[i]);  
+        }  
+	}
+}
