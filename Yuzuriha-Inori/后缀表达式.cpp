@@ -98,6 +98,4 @@ void  Stack<T>::add(char *exp)
                     break;  
             }  
             s.Push(exp[i]);  
-        }  
-	}
-}
+		}
