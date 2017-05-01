@@ -99,3 +99,4 @@ void  Stack<T>::add(char *exp)
             }  
             s.Push(exp[i]);  
 		}
+	}
