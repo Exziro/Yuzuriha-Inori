@@ -87,11 +87,12 @@ void  Stack<T>::add(char *exp)
         {  
             while(_pData.empty() == false)  
             {  
-                char ch = s.Top();  
-                if(ch == '+'||ch == '-'||ch == '/'||ch == '*')  
+                char ch = Stack.Top();  
+                if(ch == '+')  
                 {  
   
-                   t[j++] = s.top();  
+					_pData[j++] = Stack.Top
+						();  
                    s.pop();  
                 }  
                 else  
