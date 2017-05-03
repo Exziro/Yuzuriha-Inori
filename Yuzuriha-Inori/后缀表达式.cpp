@@ -63,7 +63,7 @@ private:
 			delete _pData;
 			_pData=tmp；
 			 指向新空间
-		/*	_capacity *= 2;*/
+			_capacity *= 2;
 
 		}
 	}
