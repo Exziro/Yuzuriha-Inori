@@ -63,7 +63,7 @@ private:
 			delete _pData;
 			_pData=tmp；
 			 指向新空间
-			_capacity *= 2;
+		/*	_capacity *= 2;*/
 
 		}
 	}
@@ -90,14 +90,36 @@ void  Stack<T>::add(char *exp)
                 char ch = Stack.Top();  
                 if(ch == '+')  
                 {  
-  
-					_pData[j++] = Stack.Top
-						();  
-                   s.pop();  
-                }  
-                else  
+					int a=Stack.Top();
+					int b=_pData[j-1];
+					Stack.pop();
+					_pData[j] = a+b;  
+                }
+				if(ch == '-')  
+                {  
+					int a=Stack.Top();
+					int b=_pData[j-1];
+					Stack.pop();
+					_pData[j] = a-b;  
+                }
+				if(ch == '*')  
+                {  
+					int a=Stack.Top();
+					int b=_pData[j-1];
+					Stack.pop();
+					_pData[j] = a*b;  
+                }
+				if(ch == '/')  
+                {  
+					int a=Stack.Top();
+					int b=_pData[j-1];
+					Stack.pop();
+					_pData[j] = a/b;  
+                }
+                else
                     break;  
             }  
             s.Push(exp[i]);  
 		}
 	}
+}
