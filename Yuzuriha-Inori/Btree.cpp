@@ -36,11 +36,18 @@ public:
 		_pRoot = _CopyBirnaryTree(bt._pRoot);
 	}
 
-	BinaryTree<T>& operator=(const BinaryTree<T>& bt);
+	BinaryTree<T>& operator=(const BinaryTree<T>& bt)
+	{
+		if(this!=bt)
+		{
+			std::swap(_pRoot,bt._pRoot);
+		}
+		return *this;
+	}
 
 	~BinaryTree()
 	{
-		//_DestroyBinaryTree(_pRoot);
+		_DestroyBinaryTree(_pRoot);
 	}
 
 
@@ -134,9 +141,27 @@ private:
 	}
 
 	// pRoot-->被拷贝树的根节点
-	//Node* _CopyBirnaryTree(Node* pRoot);
+	Node* _CopyBirnaryTree(Node* pRoot)
+	{
+		if(pRoot==NULL)
+		{
+			return NULL;
+		}
+		Node*root=new Node(pRoot->_value);
+		pRoot->_pLeft=_CopyBirnaryTree(pRoot->_pLeft);
+		pRoot->_pRight=_CopyBirnaryTree(pRoot->_pRight);
+		return pRoot;
+	}
 
-	//void _DestroyBinaryTree(Node*& pRoot);
+	void _DestroyBinaryTree(Node*& pRoot)
+	{
+		Node*tmp=pRoot;
+		if(NULL==tmp)
+			return;
+		_DestroyBinaryTree(tmp->_pLeft);
+		_DestroyBinaryTree(tmp->_pRight);
+		delete tmp;
+	}
 
 	////////////////////////////////////////////////////////////////
 	// 前序：访问根节点--->访问根节点的左子树--->访问根节点的右子树
@@ -192,7 +217,11 @@ private:
 
 	Node* _Parent(Node* pRoot, Node* pCur)
 	{
-		Node*pvre=NULL;
+		Node*pvre=pRoot;
+		if(pRoot==pCur)
+			return pver;
+		_Parent()
+
 	}
 
 	size_t _Height(Node* pRoot);
