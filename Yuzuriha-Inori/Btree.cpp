@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 #include<string.h>
+#include<queue>
 template<class T>
 struct BinaryTreeNode
 {
@@ -79,7 +80,14 @@ public:
 	}
 
 	// 层序遍历
-	void LevelOrder();
+	void LevelOrder()
+	{
+		cout<<"PostOrder:"<<endl;
+		_LevelOrder(_pRoot);
+		cout<<endl;
+		
+	}
+
 
 	Node* Find(const T& value)
 	{
@@ -200,6 +208,27 @@ private:
 		}
 		return ;
 	}
+	void _LevelOrder(Node*proot)
+	{
+		Node*tmp=proot;
+		queue<Node*>q;
+		q.push(tmp);
+		while(!q.empty())
+		{
+			Node*top=q.front;
+			q.pop;
+			cout<<top->_value<<"　";
+			if(top->_pRight)
+			{
+				q.push(top->_pRight);
+			}
+			if(top->_pLeft)
+			{
+				q.push(top->_pLeft);
+			}
+		}
+	}
+		
 
 	Node* _Find(Node* pRoot, const T& value)//查找特定参数
 	{
@@ -215,20 +244,56 @@ private:
 	}
 			
 
-	Node* _Parent(Node* pRoot, Node* pCur)
+	Node* _Parent(Node* pRoot, Node* pCur)//找出当前节点的父子树
 	{
-		Node*pvre=pRoot;
-		if(pRoot==pCur)
-			return pver;
-		_Parent()
+		if(pRoot->_pLeft||pRoot->_pRight){
+		if(pRoot->_pRight==pCur)
+			return pRoot;
+		if(pRoot->_pLeft==pCur)
+			return pRoot;
+		_Parent(pRoot->_pLeft,pCur);
+		_Parent(pRoot->_pRight,pCur);
+		}
 
 	}
 
-	size_t _Height(Node* pRoot);
+	size_t _Height(Node* pRoot)
+	{
+		if(pRoot==NULL)
+		{
+			return 0;
+		}
+		int left=_Height(pRoot->_pLeft)+1;
+		int right=Height(pRoot->_pRight)+1;
+		return left<right ? right:left;
+	}
 
-	size_t _GetLeefCount(Node* pRoot);
 
-	size_t _GetKLevelCount(Node* pRoot, size_t k);
+	size_t _GetLeefCount(Node* pRoot)
+	{
+		if(pRoot==NULL)
+		{
+			return 0;
+		}
+		int left=_Height(pRoot->_pLeft)+1;
+		int right=Height(pRoot->_pRight)+1;
+		return left+right;
+	}
+
+	size_t _GetKLevelCount(Node* pRoot, size_t k)
+	{
+		if(pRoot==NULL||k<0)
+		{
+			return 0;
+		}
+		if(k==1)
+		{
+			return 1;
+		}
+		rsize_t right=GetKLevelCount(pRoot->_pRight,k-1);
+		rsize_t left=GetKLevelCount(pRoot->_pLeft,k-1);
+		return left+right;
+	}
 
 	void _BinaryMirror(Node* pRoot);
 
