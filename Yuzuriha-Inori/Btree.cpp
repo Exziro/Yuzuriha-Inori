@@ -126,7 +126,10 @@ public:
 	}
 
 
-	void BinaryMirror_Nor();
+	//void BinaryMirror_Nor()
+	//{
+	//	return _BinaryMirror(_pRoot);
+	//}
 
 	void BinaryMirror()
 	{
@@ -163,12 +166,13 @@ private:
 
 	void _DestroyBinaryTree(Node*& pRoot)
 	{
-		Node*tmp=pRoot;
-		if(NULL==tmp)
+		/*Node*tmp=pRoot*/;
+		if(NULL==pRoot)
 			return;
-		_DestroyBinaryTree(tmp->_pLeft);
-		_DestroyBinaryTree(tmp->_pRight);
-		delete tmp;
+		_DestroyBinaryTree(pRoot->_pLeft);
+		_DestroyBinaryTree(pRoot->_pRight);
+		delete pRoot;
+		pRoot=NULL;
 	}
 
 	////////////////////////////////////////////////////////////////
@@ -215,8 +219,8 @@ private:
 		q.push(tmp);
 		while(!q.empty())
 		{
-			Node*top=q.front;
-			q.pop;
+			Node*top=q.front();
+			q.pop();
 			cout<<top->_value<<"　";
 			if(top->_pRight)
 			{
@@ -295,7 +299,29 @@ private:
 		return left+right;
 	}
 
-	void _BinaryMirror(Node* pRoot);
+	void _BinaryMirror(Node* pRoot)
+	{
+		if(pRoot==NULL)
+		{
+			return;
+		}
+		if(NULL==pRoot->_pLeft&&pRoot->_pRight)
+		{
+			return ;
+		}
+		Node*tmp=NULL;
+		tmp=pRoot->_pLeft;
+		pRoot->_pRight=pRoot->_pLeft;
+		pRoot->_pLeft=tmp;
+		if(pRoot->_pLeft)
+		{
+			_BinaryMirror(pRoot->_pLeft);
+		}
+		if(pRoot->_pRight)
+		{
+			_BinaryMirror(pRoot->_pRight);
+		}
+	}
 
 private:
 	Node* _pRoot;   // 指向树的根节点
@@ -312,11 +338,11 @@ void Test()
 	//bt.PostOrder();
 	//bt.LevelOrder();
 
-	//BinaryTree<char> bt1(bt);
+	BinaryTree<char> bt1(bt);
 	//bt1.PreOrder();
 	//bt1.InOrder();
 	//bt1.PostOrder();
-
+	bt1.LevelOrder();
 	//BinaryTree<char> bt2;
 	//bt2 = bt1;
 	//bt2.PostOrder();
