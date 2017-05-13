@@ -131,15 +131,15 @@ public:
 			return left>right;
 		}
 	};
-//int main()
-//{
-//	int arry[5]={1,4,3,2,5};
-//	//myhead<int> a;
-//	//a.inithead(5,arry);
-//	//a.adjust_heap(1);
-//	Heap<int> a(arry,5);
-//	a.insert(6);
-//	a.remove();
-//	system("pause");
-//	return 0;
-//}
+int main()
+{
+	int arry[5]={1,4,3,2,5};
+	//myhead<int> a;
+	//a.inithead(5,arry);
+	//a.adjust_heap(1);
+	Heap<int> a(arry,5);
+	a.insert(6);
+	a.remove();
+	system("pause");
+	return 0;
+}
