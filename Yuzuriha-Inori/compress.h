@@ -27,5 +27,5 @@ struct Infor
 	int _count;
 	string _code;
 };
-class compress
-{
+//class compress
+//{
