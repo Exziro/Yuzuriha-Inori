@@ -27,5 +27,22 @@ struct Infor
 	int _count;
 	string _code;
 };
-//class compress
-//{
+class Filecompress
+{
+public:
+	Filecompress()
+	{
+		for(int i =0;i<256;i++)
+		{
+			_info[i].ch= i ;
+			_info[i]._count=0;
+		}
+	}
+
+private:
+	void Compress(const char *Filename)
+	{
+
+	}
+	Infor _info[256];
+};
