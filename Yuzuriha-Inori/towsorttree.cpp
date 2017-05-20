@@ -107,29 +107,70 @@ public:
 		while(_pRoot->_key != key)
 		{	
 
-		if(key>_pRoot->_key)
-			_pRoot = _pRoot->_pRight;
-		else
-		{
+		if(key > _pRoot->_key)
 			parent = _pRoot;
-			if(_pRoot->_pLeft)	
-				_pRoot = _pRoot->_pLeft;
-			else
-				{
-					_pRoot->_pLeft = T;
-					break;
-				}
+			_pRoot = _pRoot->_pRight;
+		else if(key < _pRoot->_key)
+		{
+			parent = _pRoot; 
+			_pRoot = _pRoot->_pLeft
 		}
+		if(_pRoot->_key == key)
+			break;
 
 			/*_pRoot->_pLeft;*/
 	
 		}
 		if(NULL == T->_pLeft&& NULL == T->_pRight)
 		{
+			(parent->left==node)?(parent->left=NULL):(parent->right=NULL);//判断父节点右子树是不是该节点 是则滞空
 			delete T;
+			T = NULL;
+			return true;
+		}
+		else if(NULL == T->_pRight && T->_pLeft)//有左无右
+		{
+			(parent->_pLeft==node)?(parent->_pLeft = T->_pLeft):(parent->right=T->_pLeft);
+			delete T;
+			T = NULL;
+			
+		}
+		else if(NULL == T->_pLeft && T->_pRight)//有右无左
+		{
+			(parent->_pLeft==node)?(parent->_pLeft = T->_pLeft):(parent->_=T->_pRight);
+			delete T;
+			T = NULL;
+		}
+		else
+		{
+			Node*_parent;
+			Node*tmp = T;
+			Node*left = T->_pLeft;
+			Node*right = T->_pRight;
+			while(left->_pRight)//一直找最大
+			{
+				_parent = left;
+				left = left->_pRight;
+			}
+			//while(right->_pLeft)//一直找最小
+			//{
+			//	right = right->_pLeft;
+			//}
+			//if(left->_key > right->_key)
+			left->_key = T->_key;
+			left->_value = T->_value;
+			left->_pLeft = T->_pLeft;
+			left->_pRight = T->_pRight;
+			T->_pLeft = NULL;
+			T->_pRight = NULL;
+			delete T;
+			T = NULL;
 			return true;
 		}
 		}
+		
+		return false;
+		
 
 		
 		
