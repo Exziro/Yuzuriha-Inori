@@ -116,6 +116,7 @@ public:
 			_pRoot = _pRoot->_pLeft
 		}
 		if(_pRoot->_key == key)
+			T = _pRoot;
 			break;
 
 			/*_pRoot->_pLeft;*/
@@ -183,8 +184,8 @@ public:
 		cout<<endl;
 	}
 
-	const K& GetMaxKey()const;
-	const K& GetMinKey()const;
+	//const K& GetMaxKey()const;
+	//const K& GetMinKey()const;
 
 protected:
 	void _InOrder(Node* pRoot)
@@ -202,61 +203,72 @@ protected:
 };
 
 
-// µÝ¹é°æ±¾
-template<class K, class V>
-class BSTree
-{
-	typedef BSTNode<K, V> Node;
-public:
-	BSTree()
-		: _pRoot(NULL)
-	{}
-
-	//BSTree(const BSTree& bst);
-	//BSTree<K, V>& operator=(const BSTree<K, V>& bst);
-	//~BSTree();
-
-	Node* Find(const K& key)
-	{
-		return _Find(_pRoot, key);
-	}
-
-	bool Insert(const K& key, const V& value)
-	{
-		return _Insert(_pRoot, key, value);
-	}
-
-	bool Remove(const K& key)
-	{
-		return _Remove(_pRoot, key);
-	}
-
-	void InOrder()
-	{
-		cout<<"InOrder: ";
-		_InOrder(_pRoot);
-		cout<<endl;
-	}
-
-
-protected:
-	Node* _Find(Node* pRoot, const K& key)
-	bool _Insert(Node* & pRoot, const K& key, const V& value)
-	bool _Remove(Node*& pRoot, const K& key)
-
-
-	void _InOrder(Node* pRoot)
-	{
-		if(pRoot)
-		{
-			_InOrder(pRoot->_pLeft);
-			cout<<pRoot->_key<<" ";
-			_InOrder(pRoot->_pRight);
-		}
-	}
-protected:
-	Node* _pRoot;
-};
+// //µÝ¹é°æ±¾
+//template<class K, class V>
+//class BSTree
+//{
+//	typedef BSTNode<K, V> Node;
+//public:
+//	BSTree()
+//		: _pRoot(NULL)
+//	{}
+//
+//	//BSTree(const BSTree& bst);
+//	//BSTree<K, V>& operator=(const BSTree<K, V>& bst);
+//	//~BSTree();
+//
+//	Node* Find(const K& key)
+//	{
+//		if(_pRoot->key == key)
+//		{
+//				return _pRoot;
+//		}
+//		else if(_pRoot->key > key)
+//		{
+//			_pRoot->
+//		
+//
+//		}	
+//		
+//		return _Find(_pRoot, key);
+//	}
+//
+//	bool Insert(const K& key, const V& value)
+//	{
+//		return _Insert(_pRoot, key, value);
+//	}
+//
+//	bool Remove(const K& key)
+//	{
+//		return _Remove(_pRoot, key);
+//	}
+//
+//	void InOrder()
+//	{
+//		cout<<"InOrder: ";
+//		_InOrder(_pRoot);
+//		cout<<endl;
+//	}
+//
+//
+//protected:
+//	Node* _Find(Node* pRoot, const K& key)
+//	bool _Insert(Node* & pRoot, const K& key, const V& value)
+//	bool _Remove(Node*& pRoot, const K& key)
+//
+//
+//	void _InOrder(Node* pRoot)
+//	{
+//		if(pRoot)
+//		{
+//			_InOrder(pRoot->_pLeft);
+//			cout<<pRoot->_key<<" ";
+//			_InOrder(pRoot->_pRight);
+//		}
+//	}
+//protected:
+//	Node * _pRoot;
+//};
 
 
 
