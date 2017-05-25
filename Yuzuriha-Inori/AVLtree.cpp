@@ -10,7 +10,7 @@ struct BSTNode
     BSTNode* _left;  
     BSTNode* _right;
 	BSTNode* _parent;
-	int bf = 0;
+	int bf ;
   
     BSTNode(const K& key, const V& value)  
         : _key(key)  
@@ -65,7 +65,40 @@ public:
         {  
             parent->_right = cur; 
 			cur->_parent = parent;
-        }  
+        }
+		while(parent)
+		{
+			if(parent->_left == cur)
+				parent->bf--;
+			else
+				parent->bf++;
+			if(parent->bf == 0)
+				return true;
+			else if(1 == parent->bf || -1 == parent->bf)
+			{
+				cur = parent;
+				parent = parent->_parent;
+			}
+			else
+			{
+				if(2 == parent->bf)
+				{	if(cur->bf == 1)
+						rotatepLeft(parent);
+					else
+						rotatepLR(parent);	
+				}
+				else
+				{
+					if(-1 == cur->bf)
+						rotatepright(parent);
+					else
+						rotatepLR(parent);
+						
+				}
+			}
+
+		}
+
         return true;  
     }  
    //µÝ¹é²åÈë  
@@ -73,6 +106,8 @@ public:
     {  
         return _Insert_R(_root, key, value);  
     }
+	void rotatepRL(Node * parent);
+	void rotatepLR(Node * parent)
 	void rotatepRight(Node * parent)//ÓÒÐý
 	{
 		Node * SubR = parent->_right;
@@ -95,10 +130,6 @@ public:
 		}
 		parent->bf = SubR->bf = 0;
 	}
-	//void rotatepRight(Node * parent)
-	//{
-	//	Node * SubL = parent->
-	//}
 	void rotatepLeft(Node * parent)//×óÐý
 	{
 		Node*SubL = parent->_left;
