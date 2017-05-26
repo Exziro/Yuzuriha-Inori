@@ -66,6 +66,7 @@ public:
             parent->_right = cur; 
 			cur->_parent = parent;
         }
+		bool IsRotate = false;
 		while(parent)
 		{
 			if(parent->_left == cur)
@@ -81,6 +82,7 @@ public:
 			}
 			else
 			{
+				IsRotate = true; 
 				if(2 == parent->bf)
 				{	if(cur->bf == 1)
 						rotatepLeft(parent);
@@ -96,8 +98,24 @@ public:
 						
 				}
 			}
-
+			break;
 		}
+		if(IsRotate)
+		{
+			Node * pparent = parent->_parent;
+			if(pparent == NULL)
+			{
+				_root = parent;
+			}
+			else
+			{
+				if(pparent->_key < parent->_key)
+					pparent->_right = parent;
+				else
+					pparent->_left = parent;
+			}
+		}
+
 
         return true;  
     }  
@@ -106,8 +124,18 @@ public:
     {  
         return _Insert_R(_root, key, value);  
     }
-	void rotatepRL(Node * parent);
+	void rotatepRL(Node * parent)
+	{
+		rotatepLeft(parent->_left);
+		rotatepRight(parent);
+	}
+
 	void rotatepLR(Node * parent)
+	{
+		rotatepRight(parent->_right);
+		rotatepLeft(parent);
+	}
+
 	void rotatepRight(Node * parent)//ÓÒÐý
 	{
 		Node * SubR = parent->_right;
@@ -166,118 +194,118 @@ public:
 		return _height(_root);
 	}
 //·ÇµÝ¹éÉ¾³ý  
-    bool Remove(const K& key)  
-    {  
-        if (_root == NULL)  
-        {  
-            return false;  
-        }  
-        if (_root->_left == NULL && _root->_right == NULL)  
-        {  
-            delete _root;  
-            _root = NULL;  
-            return true;  
-        }  
+    //bool Remove(const K& key)  
+    //{  
+    //    if (_root == NULL)  
+    //    {  
+    //        return false;  
+    //    }  
+    //    if (_root->_left == NULL && _root->_right == NULL)  
+    //    {  
+    //        delete _root;  
+    //        _root = NULL;  
+    //        return true;  
+    //    }  
   
-        Node *parent = _root;  
-        Node *del = _root;  
-        while (del)  
-        {  
-            if (key < del->_key)  
-            {  
-                parent = del;  
-                del = del->_left;  
-            }  
-            else if (key > del->_key)  
-            {  
-                parent = del;  
-                del = del->_right;  
-            }  
-            else  
-            {  
-                break;  
-            }  
-        }  
-        if (del == NULL)  
-        {  
-            return false;  
-        }  
+    //    Node *parent = _root;  
+    //    Node *del = _root;  
+    //    while (del)  
+    //    {  
+    //        if (key < del->_key)  
+    //        {  
+    //            parent = del;  
+    //            del = del->_left;  
+    //        }  
+    //        else if (key > del->_key)  
+    //        {  
+    //            parent = del;  
+    //            del = del->_right;  
+    //        }  
+    //        else  
+    //        {  
+    //            break;  
+    //        }  
+    //    }  
+    //    if (del == NULL)  
+    //    {  
+    //        return false;  
+    //    }  
   
-        if (del->_left == NULL)  
-        {  
-            if (del->_key = key)  
-            {  
-                _root = del->_right;  
-                delete del;  
-                del = NULL;  
-                return true;  
-            }  
-            else if (parent->_left == del)  
-            {  
-                parent->_left = del->_right;  
-            }  
-            else  
-            {  
-                parent->_right = del->_right;  
-            }  
-        }  
-        else if (del->_right == NULL)  
-        {  
-            if (del->_key = key)  
-            {  
-                _root = del->_left;  
-                delete del;  
-                del = NULL;  
-                return true;  
-            }  
-            else if (parent->_right == del)  
-            {  
-                parent->_right = del->_left;  
-            }  
-            else  
-            {  
-                parent->_left = del->_left;  
-            }  
-        }  
-        else  
-        {  
-            Node* sub = del;  
-            Node* First = del->_right;  
-            if (First->_left)  
-            {  
-                sub = First;  
-                First = First->_left;  
-            }  
-            swap(del->_key, First->_key);  
-            swap(del->_value, First->_value);  
-            del = First;  
-            if (del->_left == NULL)  
-            {  
-                if (sub->_left == del)  
-                {  
-                    sub->_left = del->_right;  
-                }  
-                else  
-                {  
-                    sub->_right = del->_right;  
-                }  
-            }  
-            else if (del->_right == NULL)  
-            {  
-                if (sub->_left == del)  
-                {  
-                    sub->_left = del->_left;  
-                }  
-                else  
-                {  
-                    sub->_left = del->_left;  
-                }  
-            }  
-        }  
-        delete del;  
-        del = NULL;  
-        return true;  
-    }  
+    //    if (del->_left == NULL)  
+    //    {  
+    //        if (del->_key = key)  
+    //        {  
+    //            _root = del->_right;  
+    //            delete del;  
+    //            del = NULL;  
+    //            return true;  
+    //        }  
+    //        else if (parent->_left == del)  
+    //        {  
+    //            parent->_left = del->_right;  
+    //        }  
+    //        else  
+    //        {  
+    //            parent->_right = del->_right;  
+    //        }  
+    //    }  
+    //    else if (del->_right == NULL)  
+    //    {  
+    //        if (del->_key = key)  
+    //        {  
+    //            _root = del->_left;  
+    //            delete del;  
+    //            del = NULL;  
+    //            return true;  
+    //        }  
+    //        else if (parent->_right == del)  
+    //        {  
+    //            parent->_right = del->_left;  
+    //        }  
+    //        else  
+    //        {  
+    //            parent->_left = del->_left;  
+    //        }  
+    //    }  
+    //    else  
+    //    {  
+    //        Node* sub = del;  
+    //        Node* First = del->_right;  
+    //        if (First->_left)  
+    //        {  
+    //            sub = First;  
+    //            First = First->_left;  
+    //        }  
+    //        swap(del->_key, First->_key);  
+    //        swap(del->_value, First->_value);  
+    //        del = First;  
+    //        if (del->_left == NULL)  
+    //        {  
+    //            if (sub->_left == del)  
+    //            {  
+    //                sub->_left = del->_right;  
+    //            }  
+    //            else  
+    //            {  
+    //                sub->_right = del->_right;  
+    //            }  
+    //        }  
+    //        else if (del->_right == NULL)  
+    //        {  
+    //            if (sub->_left == del)  
+    //            {  
+    //                sub->_left = del->_left;  
+    //            }  
+    //            else  
+    //            {  
+    //                sub->_left = del->_left;  
+    //            }  
+    //        }  
+    //    }  
+    //    delete del;  
+    //    del = NULL;  
+    //    return true;  
+    //}  
 //µÝ¹éÉ¾³ý  
     bool Remove_R(const K& key)  
     {  
