@@ -348,7 +348,7 @@ protected:
 		return _root->bf;
 	}
 
-    bool _Insert_R(Node*&root,const K & key, const V & value)  
+   /* bool _Insert_R(Node*&root,const K & key, const V & value)  
     {  
         if (root == NULL)  
         {  
@@ -367,7 +367,7 @@ protected:
         {  
             return false;  
         }  
-    }  
+    }  */
     bool _Remove_R(Node *&root, const K&key)  
     {  
         if (root == NULL)  
