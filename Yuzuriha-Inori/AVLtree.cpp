@@ -124,13 +124,13 @@ public:
     {  
         return _Insert_R(_root, key, value);  
     }
-	void rotatepRL(Node * parent)
+	void rotatepRL(Node * parent)//先右后左
 	{
 		rotatepLeft(parent->_left);
 		rotatepRight(parent);
 	}
 
-	void rotatepLR(Node * parent)
+	void rotatepLR(Node * parent)//先左后右
 	{
 		rotatepRight(parent->_right);
 		rotatepLeft(parent);
@@ -182,13 +182,13 @@ public:
 	
 	}
     //查找  
-    void Find(const K& key)  
-    {  
-        if (_Find(key))  
-            cout << "搜索二叉树中存在" << key << endl;  
-        else  
-            cout << "搜索二叉树中不存在" << key << endl;  
-    }  
+    //void Find(const K& key)  
+    //{  
+    //    if (_Find(key))  
+    //        cout << "搜索二叉树中存在" << key << endl;  
+    //    else  
+    //        cout << "搜索二叉树中不存在" << key << endl;  
+    //}  
 	int height(Node * _root)
 	{
 		return _height(_root);
