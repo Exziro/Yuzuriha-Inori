@@ -1,330 +1,152 @@
-#include<iostream>  
-#include<stdlib.h>  
-using namespace std;  
-  
-template<class K,class V>  
-struct BSTNode  
-{  
-    K _key;  
-    V _value;  
-    BSTNode* _left;  
-    BSTNode* _right;
-	BSTNode* _parent;
-	int bf ;
-  
-    BSTNode(const K& key, const V& value)  
-        : _key(key)  
-        , _value(value)  
-        , _left(NULL)  
-        , _right(NULL)  
-    {}  
-};  
-template<class K, class V>  
-class BSTree  
-{  
-    typedef BSTNode<K, V> Node;  
-public:  
-    BSTree()  
-        :_root(NULL)  
-    {}  
-    //·ÇµÝ¹é²åÈë  
-	
-    bool Insert(const K & key, const V & value)  
-    {  
-        if (_root == NULL)  
-        {  
-            _root = new Node(key, value);
-            return true;  
-        }  
-        Node *parent = NULL;  
-        Node *cur = _root;  
-        while (cur)  
-        {  
-            if (key > cur->_key)  
-            {  
-                parent = cur;  
-                cur = cur->_right;  
-            }  
-            else if (key < cur->_key)  
-            {  
-                parent = cur;  
-                cur = cur->_left;  
-            }  
-            else  
-            {  
-                return false;  
-            }  
-        }  
-        cur = new Node(key, value);  
-        if (parent->_key > key)  
-        {  
-            parent->_left = cur; 
-			cur->_parent = parent;
-        }  
-        else  
-        {  
-            parent->_right = cur; 
-			cur->_parent = parent;
-        }
-		bool IsRotate = false;
-		while(parent)
+enum COLOR{RED, BLACK};
+#include<iostream>
+using namespace std;
+
+template<class K, class V>
+struct RBTreeNode
+{
+	RBTreeNode(const K& key = K(), const V& value = V(), const COLOR& color = RED)
+		:_pLeft(NULL)
+		, _pRight(NULL)
+		, _pParent(NULL)
+		, _key(key)
+		, _value(value)
+		, _color(color)
+	{}
+
+	RBTreeNode<K, V>* _pLeft;
+	RBTreeNode<K, V>* _pRight;
+	RBTreeNode<K, V>* _pParent;
+	K _key;
+	V _value;
+	COLOR _color;
+};
+
+
+template<class K, class V, class Ref, class Pointer>
+class RBTreeIterator
+{
+	typedef RBTreeNode<K , V> Node;
+	typedef RBTreeIterator<K, V, Ref, Pointer> Self;
+public:
+	RBTreeIterator()
+		: _pNode(NULL)
+	{}
+
+	RBTreeIterator(Node* pNode)
+		: _pNode(pNode)
+	{}
+
+	RBTreeIterator(RBTreeIterator& it)
+		: _pNode(it._pNode)
+	{}
+
+	Self& operator++();
+	Self operator++(int);
+	Self& operator--();
+	Self operator--(int);
+	Ref operator*();
+	const Ref operator*()const ;
+	Pointer operator->();
+	const Pointer operator->()const;
+	bool operator==(const Self& it);
+	bool operator!=(const Self& it);
+protected:
+	void _Increment();
+	void _Decrement();
+protected:
+	Node* _pNode;
+};
+
+// µü´úÆ÷
+template<class K, class V>
+class RBTree
+{
+	typedef RBTreeNode<K, V> Node;
+
+public:
+	typedef RBTreeIterator<K, V, K&, K*> Iterator;
+public:
+	RBTree();
+	Iterator Begin();
+	Iterator End();
+	bool Empty()const;
+	size_t Size()const;
+	Iterator Find(const K& key);
+
+	// Ê×ÏÈ£ºËÑË÷Ê÷
+	bool Insert(const K& key, const V& value);
+	void InOrder()
+	{
+		cout<<"InOrder: ";
+		_InOrder(_GetRoot());
+		cout<<endl;
+	}
+
+	bool CheckRBTree();
+
+private:
+	bool _CheckRBTree(Node* pRoot, const size_t blackCoount, size_t k);
+	void _RotateL(Node* parent);
+	void _RotateR(Node* pParent);
+	void _InOrder(Node* pRoot)
+	{
+		if(pRoot)
 		{
-			if(parent->_left == cur)
-				parent->bf--;
-			else
-				parent->bf++;
-			if(parent->bf == 0)
-				return true;
-			else if(1 == parent->bf || -1 == parent->bf)
-			{
-				cur = parent;
-				parent = parent->_parent;
-			}
-			else
-			{
-				IsRotate = true; 
-				if(2 == parent->bf)
-				{	if(cur->bf == 1)
-						rotatepLeft(parent);
-					else
-						rotatepLR(parent);	
-				}
-				else
-				{
-					if(-1 == cur->bf)
-						rotatepright(parent);
-					else
-						rotatepLR(parent);
-						
-				}
-			}
-			break;
+			_InOrder(pRoot->_pLeft);
+			cout<<pRoot->_key<<" ";
+			_InOrder(pRoot->_pRight);
 		}
-		if(IsRotate)
-		{
-			Node * pparent = parent->_parent;
-			if(pparent == NULL)
-			{
-				_root = parent;
-			}
-			else
-			{
-				if(pparent->_key < parent->_key)
-					pparent->_right = parent;
-				else
-					pparent->_left = parent;
-			}
-		}
-
-
-        return true;  
-    }  
-   //µÝ¹é²åÈë  
-    bool Insert_R(const K & key, const V & value)  
-    {  
-        return _Insert_R(_root, key, value);  
-    }
-	void rotatepRL(Node * parent)//ÏÈÓÒºó×ó
-	{
-		rotatepLeft(parent->_left);
-		rotatepRight(parent);
 	}
 
-	void rotatepLR(Node * parent)//ÏÈ×óºóÓÒ
+	Node* &_GetRoot()
 	{
-		rotatepRight(parent->_right);
-		rotatepLeft(parent);
+		return _pHead->_pParent;
 	}
 
-	void rotatepRight(Node * parent)//ÓÒÐý
-	{
-		Node * SubR = parent->_right;
-		Node * SubRL = SubR->_left;
-		parent->_right = SubRL;
-		if(SubRL)
-			SubRL->_parent = parent;
-		SubR->_left = parent;
-		Node * pparent = parent->_parent;
-		pparent->_parent = SubR;
-		if(pparent == NULL)
-			_proot = SubR;
-		else
-		{
-			if (pparent->_left = parent)
-			pparent->_parent = SubR;
-			else
-				pparent->_right = SubR;
+	Node* _GetMinNode();
+	Node* _GetMaxNode();
+private:
+	Node* _pHead;
+	size_t _size;
+};
 
-		}
-		parent->bf = SubR->bf = 0;
-	}
-	void rotatepLeft(Node * parent)//×óÐý
-	{
-		Node*SubL = parent->_left;
-		Node*SubLR = SubL->_right;
-		parent->_right = SubLR;
-		if(SubLR)
-			SubLR->_parent = parent;
-		SubL->_right = parent;
-		Node*pparent = parent->_parent;
-		pparent->_parent = SubL;
-		if(pparent == NULL)
-			_proot = SubL;
-		else
-		{
-			if (pparent->_right = parent)
-			pparent->_parent = SubR;
-			else
-				pparent->_left = SubR;
 
-		}
-		parent->bf = SubL->bf = 0;
-	
-	}
-    //²éÕÒ  
-    //void Find(const K& key)  
-    //{  
-    //    if (_Find(key))  
-    //        cout << "ËÑË÷¶þ²æÊ÷ÖÐ´æÔÚ" << key << endl;  
-    //    else  
-    //        cout << "ËÑË÷¶þ²æÊ÷ÖÐ²»´æÔÚ" << key << endl;  
-    //}  
-	int height(Node * _root)
+void TestRBTree()
+{
+	int a[] = {10, 7, 8, 15, 5, 6, 11, 13, 12};
+	RBTree<int, int> t;
+	for(int idx = 0; idx < sizeof(a)/sizeof(a[0]); ++idx)
+		t.Insert(a[idx], idx);
+
+	t.InOrder();
+
+	if(t.CheckRBTree())
 	{
-		return _height(_root);
+		cout<<"ÊÇºìºÚÊ÷"<<endl;
+	}
+	else
+	{
+		cout<<"²»ÊÇºìºÚÊ÷"<<endl;
+	}
+}
+
+void TestIterator()
+{
+	int a[] = {10, 7, 8, 15, 5, 6, 11, 13, 12};
+	RBTree<int, int> t;
+	for(int idx = 0; idx < sizeof(a)/sizeof(a[0]); ++idx)
+		t.Insert(a[idx], idx);
+	t.InOrder();
+
+	RBTree<int, int>::Iterator it = t.Begin();
+	while(it != t.End())
+	{
+		cout<<*it<<" ";
+		++it;
 	}
 
-    bool Remove_R(const K& key)  
-    {  
-        return _Remove_R(_root, key);  
-    }  
-    //²éÕÒ  
-    Node* _Find(const K& key)  
-    {  
-        if (_root == NULL)  
-        {  
-            return NULL;  
-        }  
-        Node* cur = _root;  
-        while (cur)  
-        {  
-            if (key < cur->_key)  
-            {  
-                cur = cur->_left;  
-            }  
-            else if (key > cur->_key)  
-            {  
-                cur = cur->_right;  
-            }  
-            else  
-            {  
-                break;  
-            }  
-        }  
-        return cur;  
-    }  
-//Ç°Ðò±éÀú  
-    void InOrder()  
-    {  
-        _InOrder(_root);  
-        cout << endl;  
-    }  
-protected:  
-	int _height(Node * _root)
-	{
-		return _root->bf;
-	}
-
-   /* bool _Insert_R(Node*&root,const K & key, const V & value)  
-    {  
-        if (root == NULL)  
-        {  
-            root = new Node(key, value);  
-            return true;  
-        }  
-        if (key < root->_key)  
-        {  
-            return _Insert_R(root->_left, key, value);  
-        }  
-        else if (key > root->_key)  
-        {  
-            return _Insert_R(root->_right, key, value);  
-        }  
-        else  
-        {  
-            return false;  
-        }  
-    }  */
-    bool _Remove_R(Node *&root, const K&key)  
-    {  
-        if (root == NULL)  
-        {  
-            return false;  
-        }  
-        if (key < root->_key)  
-        {  
-            return _Remove_R(root->_left, key);  
-        }  
-        else if (key > root->_key)  
-        {  
-            return _Remove_R(root->_right, key);  
-        }  
-        else  
-        {  
-            Node* del = root;  
-            if (root->_left == NULL)  
-            {  
-                root = root->_right;  
-            }  
-            else if (root->_right == NULL)  
-            {  
-                root = root->_left;  
-            }  
-            else  
-            {  
-                Node* First = root->_right;  
-                while (First->_left)  
-                {  
-                    First = First->_left;  
-                }  
-                swap(del->_key, First->_key);  
-                swap(del->_value, First->_value);  
-                return _Remove_R(root->_right, key);  
-            }  
-            delete del;  
-            del = NULL;  
-            return true;  
-        }  
-    }  
-    void _InOrder(Node* root)  
-    {  
-        if (root == NULL)  
-        {  
-            return;  
-        }  
-        _InOrder(root->_left);  
-        cout << root->_key << " ";  
-        _InOrder(root->_right);  
-    } 
- 
-private:  
-    BSTNode<K, V>* _root;  
-};  
-  
-void test()  
-{  
-    int a[10] = { 5, 2, 4, 8, 7, 1, 9, 0, 6, 3 };  
-    BSTree<int, int> bstree;  
-    for (int i = 0; i < 10; i++)  
-    {  
-        bstree.Insert_R(a[i], a[i]);  
-    }  
-
-}  
-  
-int main()  
-{  
-    test();  
-    system("pause");  
-    return 0;  
-}  
+	RBTree<int, int>::Iterator itEnd = t.End();
+	--itEnd;
+	cout<<*itEnd<<endl;
+}
