@@ -112,24 +112,24 @@ private:
 };
 
 
-//void TestRBTree()
+void TestRBTree()
 //{
-//	int a[] = {10, 7, 8, 15, 5, 6, 11, 13, 12};
-//	RBTree<int, int> t;
-//	for(int idx = 0; idx < sizeof(a)/sizeof(a[0]); ++idx)
-//		t.Insert(a[idx], idx);
-//
-//	t.InOrder();
-//
-//	if(t.CheckRBTree())
-//	{
-//		cout<<"ÊÇºìºÚÊ÷"<<endl;
-//	}
-//	else
-//	{
-//		cout<<"²»ÊÇºìºÚÊ÷"<<endl;
-//	}
-//}
+	int a[] = {10, 7, 8, 15, 5, 6, 11, 13, 12};
+	RBTree<int, int> t;
+	for(int idx = 0; idx < sizeof(a)/sizeof(a[0]); ++idx)
+		t.Insert(a[idx], idx);
+
+	t.InOrder();
+
+	if(t.CheckRBTree())
+	{
+		cout<<"ÊÇºìºÚÊ÷"<<endl;
+	}
+	else
+	{
+		cout<<"²»ÊÇºìºÚÊ÷"<<endl;
+	}
+}
 
 void TestIterator()
 {
