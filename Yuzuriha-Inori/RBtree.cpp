@@ -86,8 +86,63 @@ public:
 	bool CheckRBTree();
 
 private:
-	bool _CheckRBTree(Node* pRoot, const size_t blackCoount, size_t k);
-	void _RotateL(Node* parent);
+	bool _CheckRBTree(Node* pRoot, const size_t blackCoount, size_t k)
+	{
+		int black = 0;//对照
+		int cBlack = 0;//实际
+		Node * cur = pRoot;
+		while (cur)
+		{
+			if(cur->_color == black)
+				black ++;
+			cur = cur->_pLeft;
+		}
+		return isRbtree(_pRoot,black,cBlack);
+	}
+	bool isRbtree(Node * root,int black , int cBlack )
+	{
+		if(root == NULL)
+			return true;
+		if(root->_color == BLACK)
+			cBlack ++;
+		if(cBlack == black)
+		{
+			if(root->_pParent == NULL)
+				return ture;
+			else if(root->_color == RED && root->_pParent->_color == root->_color)//父子节点的颜色不能相同
+				return false;
+			else
+				return true;
+
+		}
+		return isRbtree(root->_pLeft,black,cBlack)&&isRbtree(root->_pRight,black,cBlack);//左右寻找
+
+	}
+
+
+	void _RotateL(Node* parent)
+	{
+		Node * SubR = parent->_pRight;
+		Node * SubRL = SubR->_pLeft;
+		if(SubRL)
+		{
+			SubRL->_pParent = parent;
+			parent->_pRight = SubRL;
+		}
+		SubR->_pLeft = parent;
+		SubR->_pParent = parent->_pParent;
+		parent->_pParent = SubR;
+		if(parent->_pParent == NULL)
+		{
+			_pHead = SubR;
+		}
+		else if(parent->_pParent->_key > SubR->_key)
+			parent->_pParent->_pLeft = SubR;
+		else if(parent->_pParent->_key < SubR->_key)
+			parent->_pParent->_pRight = SubR;
+
+	}
+
 	void _RotateR(Node* pParent);
 	void _InOrder(Node* pRoot)
 	{
@@ -113,7 +168,7 @@ private:
 
 
 void TestRBTree()
-//{
+{
 	int a[] = {10, 7, 8, 15, 5, 6, 11, 13, 12};
 	RBTree<int, int> t;
 	for(int idx = 0; idx < sizeof(a)/sizeof(a[0]); ++idx)
