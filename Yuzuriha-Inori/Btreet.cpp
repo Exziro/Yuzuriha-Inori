@@ -167,19 +167,19 @@ protected:
 		cur->_size++;
 	}
 
-	void _InOrder(Node* root)
-	{
-		if (root == NULL)
-		{
-			return;
-		}
-		for (size_t i = 0; i < root->_size; ++i)
-		{
-			_InOrder(root->_subs[i]);
-			cout << root->_keys[i] << " ";
-		}
-		_InOrder(root->_subs[root->_size]);
-	}
+	//void _InOrder(Node* root)
+	//{
+	//	if (root == NULL)
+	//	{
+	//		return;
+	//	}
+	//	for (size_t i = 0; i < root->_size; ++i)
+	//	{
+	//		_InOrder(root->_subs[i]);
+	//		cout << root->_keys[i] << " ";
+	//	}
+	//	_InOrder(root->_subs[root->_size]);
+	//}
 
 private:
 	Node* _root;
