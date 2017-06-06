@@ -142,8 +142,8 @@ public:
 
 protected:
 
-	void _InsertKey(Node* cur, const K& k, Node* sub)
-	{
+void _InsertKey(Node* cur, const K& k, Node* sub)
+{
 		int i = cur->_size - 1;
 		while (i >= 0)
 		{
@@ -165,10 +165,10 @@ protected:
 			sub->_parent = cur;
 		}
 		cur->_size++;
-	}
+}
 
-	void _InOrder(Node* root)
-	{
+void _InOrder(Node* root)
+{
 		if (root == NULL)
 		{
 			return;
@@ -179,7 +179,7 @@ protected:
 			cout << root->_keys[i] << " ";
 		}
 		_InOrder(root->_subs[root->_size]);
-	}
+}
 
 private:
 	Node* _root;
