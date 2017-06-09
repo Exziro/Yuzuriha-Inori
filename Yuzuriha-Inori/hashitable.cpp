@@ -175,21 +175,6 @@ int hash(const Vocabulary & e,const int &tableSize)
     return hash(e.getName(), tableSize);
 }
 
-int hash(const std::string & key, const int &tableSize)
-{
-    //采用公式：h = (k1*32 + k2) * 32 + k3，将其扩展到n次多项式
-    long long int hashVal = 0;
-    int count = 0;
-    for (auto it = key.begin(); it != key.end(); ++it) 
-    {
-        if (count++ % 2 == 0)
-        {
-            hashVal += (hashVal << 5) + *it;
-        }
-        
-    }
-    return hashVal %= tableSize;
-}
 
 int hash(const int & key, const int &tableSize)
 {
