@@ -216,3 +216,37 @@ template<class K, class V, class FuncModle>
 //        }  
 //        return NULL;  
 // }  
+template<class K, class V, class FuncModle>
+bool HashBucket<K, V, FuncModle>::Remove(const K& key)
+{
+	//不能用find找到，然后删。
+	size_t index = _HashFunc(key,_table.size());
+	if (_table[index] == NULL)
+		return false;
+	Node* cur = _table[index];
+	if (cur->_key==key)
+	{
+		Node* del = cur;
+		_table[index] = cur->_next;
+		delete del;
+		_size--;
+		return true;
+	}
+	else
+	{
+		Node* prev = NULL;
+		while (cur)
+		{
+			if (cur->_key == key)
+			{
+				prev->_next = cur->_next;
+				delete cur;
+				_size--;
+				return true;
+			}
+			prev = cur;
+			cur = cur->_next;
+		}
+		return false;
+	}
+}
