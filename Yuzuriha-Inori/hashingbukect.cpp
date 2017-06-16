@@ -203,19 +203,19 @@ void HashBucket<K, V, FuncModle>::_CheckExpand()
     }  
 }
 template<class K, class V, class FuncModle>  
-//HashBucketNode<K,V>* HashBucket<K, V, FuncModle>::Find(const K& key)  
-// {  
-//        size_t index = _HashFunc(key, _table.size());  
-//        while (_table[index])  
-//        {  
-//            if (_table[index]->_key == key)  
-//            {  
-//                return _table[index];  
-//            }  
-//            _table[index] = _table[index]->_next;  
-//        }  
-//        return NULL;  
-// }  
+HashBucketNode<K,V>* HashBucket<K, V, FuncModle>::Find(const K& key)  
+ {  
+        size_t index = _HashFunc(key, _table.size());  
+        while (_table[index])  
+        {  
+            if (_table[index]->_key == key)  
+            {  
+                return _table[index];  
+            }  
+            _table[index] = _table[index]->_next;  
+        }  
+        return NULL;  
+ }  
 template<class K, class V, class FuncModle>
 bool HashBucket<K, V, FuncModle>::Remove(const K& key)
 {
