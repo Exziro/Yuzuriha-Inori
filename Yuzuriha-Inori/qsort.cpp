@@ -38,3 +38,16 @@ void quickSort(int s[], int l, int r)
         quickSort(s, i + 1, r);  
     }  
 }  
+void SelectionSort(int* pDataArray, int iDataNum)  
+{  
+    for (int i = 0; i < iDataNum - 1; i++)    //从第一个位置开始  
+    {  
+        int index = i;  
+        for (int j = i + 1; j < iDataNum; j++)    //寻找最小的数据索引   
+            if (pDataArray[j] < pDataArray[index])  
+                index = j;  
+  
+        if (index != i)    //如果最小数位置变化则交换  
+            DataSwap(&pDataArray[index], &pDataArray[i]);  
+    }  
+}  
