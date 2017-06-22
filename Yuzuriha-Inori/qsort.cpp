@@ -38,6 +38,12 @@ void quickSort(int s[], int l, int r)
         quickSort(s, i + 1, r);  
     }  
 }  
+void DataSwap(int* data1, int* data2)  
+{  
+    int temp = *data1;  
+    *data1 = *data2;  
+    *data2 = temp;  
+}  
 void SelectionSort(int* pDataArray, int iDataNum)  
 {  
     for (int i = 0; i < iDataNum - 1; i++)    //从第一个位置开始  
