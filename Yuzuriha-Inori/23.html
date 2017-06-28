@@ -1,0 +1,89 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<title>HTML表单</title>
+<style type="text/css">
+.all{
+	width:800px;
+	height:500px; 
+	border:5px solid black;
+	margin-left:100px;}
+.a{
+	width:800px;
+	height:30px;
+	border-bottom:2px solid black;}
+.b{
+	width:800px;
+	height:310px;
+	border-bottom:2px solid black;}
+.one{
+	display:inline-block;
+	width:20%;
+	height:100%;
+	border-right:2px solid black;}
+.two{
+	width:600px;
+	height:30px;}
+</style>
+</head>
+
+<body>
+<form action="#" method="post">
+<div class="all">
+    <div class="a">
+        <span class="one">姓名</span>
+        <span class="two"><input type="text" name="user"></span>
+    </div>
+	    <div class="a">
+        <span class="one">昵称</span>
+        <span class="two"><input type="text" name="user"></span>
+    </div>
+    <div class="a">
+        <span class="one">密码</span>
+        <span class="two"><input type="password" name="pwd" /></span>
+    </div>
+    <div class="a">
+        <span class="one">确认密码</span>
+        <span class="two"><input type="password" name="cpwd" /></span>
+    </div>
+    <div class="a">
+        <span class="one">性别</span>
+        <span class="two"><input type="radio" name="sex" value="male" />男
+        				  <input type="radio" name="sex" value="female" />女</span>
+    </div>
+    <div class="a">
+        <span class="one">爱好</span>
+        <span class="two"><input type="checkbox" value="ty" />足球
+        				  <input type="checkbox" value="wx" />羽毛球
+                          <input type="checkbox" value="ys" />摄影
+                          <input type="checkbox" value="lq" />健身
+                          <input type="checkbox" value="yy" />流行</span>
+    </div>
+    <div class="a">
+        <span class="one">电子邮件</span>
+        <span class="two"><input type="text" name="email"></span>
+    </div>
+    <div class="b">
+        <span class="one">个人介绍</span>
+        <span class="two"><textarea name="des"></textarea></span>
+    </div>
+    <div class="a">
+        <span class="one">职业</span>
+        <span class="two"><select>
+        					<option>学生</option>
+                            <option>程序员</option>
+                            <option>建筑师</option>
+                            <option>工程师</option>
+                            <option>歌手</option>
+                            </select>
+                            </span>
+    </div>
+</div>
+<p align="center"><input type="submit" name="reg" value="注册" />
+				  <input type="reset" name="reset" value="重置" />
+                  </p>
+</form>
+</body>
+</html>
