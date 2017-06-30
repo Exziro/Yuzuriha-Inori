@@ -227,4 +227,111 @@ Node * BulidDecisionTreeDFS(Node * p, vector <vector <string> > remain_state, ve
     }    
     return p;    
 }    
+void Input(){    
+    string s;    
+    while(cin>>s,s.compare(end) != 0){//-1为输入结束    
+        item[0] = s;    
+        for(int i = 1;i < MAXLEN; i++){    
+            cin>>item[i];    
+        }    
+        state.push_back(item);//注意首行信息也输入进去，即属性    
+    }    
+    for(int j = 0; j < MAXLEN; j++){    
+        attribute_row.push_back(state[0][j]);    
+    }    
+}    
+  
+  
+void Input2(){    
+  
+    ofstream in;  
+    in.open("result.txt",ios::trunc); //ios::trunc表示在打开文件前将文件清空,由于是写入,文件不存在则创建  
+      
+    string s;    
+    while(cin>>s,s.compare(end) != 0){//-1为输入结束    
+        vector <string> item2(MAXLEN);//对应一行实例集    
+        item2[0] = s;    
+        for(int i = 1;i < MAXLEN-1; i++){    
+            cin>>item2[i];    
+        }    
+          
+          
+        if(item2[1] == "sunny"  && item2[3] == "high")   
+        {  
+            cout<<"no"<<endl;;  
+            in<<"no"<<"\n";  
+        }  
+        if(item2[1] == "sunny"  && item2[3] == "normal")   
+        {  
+            cout<<"yes"<<endl;in<<"yes"<<"\n";  
+        }  
+        if(item2[1] == "overcast")    
+        {  
+            cout<<"yes"<<endl;in<<"yes"<<"\n";  
+        }  
+        if(item2[1] == "rain" && item2[4] == "false")   
+        {  
+            cout<<"yes"<<endl;in<<"yes"<<"\n";  
+        }  
+        if(item2[1] == "rain" && item2[4] == "true")   
+        {  
+            cout<<"no"<<endl;in<<"no"<<"\n";  
+        }  
+        //state.push_back(item);//注意首行信息也输入进去，即属性    
+    }    
+      
+    in.close();//关闭文件  
+     
+}    
     
+void PrintTree(Node *p, int depth){    
+    for (int i = 0; i < depth; i++) cout << '\t';//按照树的深度先输出tab    
+    if(!p->arrived_value.empty()){    
+        cout<<p->arrived_value<<endl;    
+        for (int i = 0; i < depth+1; i++) cout << '\t';//按照树的深度先输出tab    
+    }    
+    cout<<p->attribute<<endl;    
+    for (vector<Node*>::iterator it = p->childs.begin(); it != p->childs.end(); it++){    
+        PrintTree(*it, depth + 1);    
+    }    
+}    
+    
+void FreeTree(Node *p){    
+    if (p == NULL)    
+        return;    
+    for (vector<Node*>::iterator it = p->childs.begin(); it != p->childs.end(); it++){    
+        FreeTree(*it);    
+    }    
+    delete p;    
+    tree_size++;    
+}    
+    
+int main(){    
+    Input();    
+    vector <string> remain_attribute;    
+        
+    string outlook("outlook");    
+    string Temperature("temperature");    
+    string Humidity("humidity");    
+    string Wind("wind");    
+    remain_attribute.push_back(outlook);    
+    remain_attribute.push_back(Temperature);    
+    remain_attribute.push_back(Humidity);    
+    remain_attribute.push_back(Wind);    
+    vector <vector <string> > remain_state;    
+    for(unsigned int i = 0; i < state.size(); i++){    
+        remain_state.push_back(state[i]);     
+    }    
+    ComputeMapFrom2DVector();    
+    root = BulidDecisionTreeDFS(root,remain_state,remain_attribute);    
+    cout<<"the decision tree is :"<<endl;    
+    PrintTree(root,0);    
+    FreeTree(root);    
+    cout<<endl;    
+    cout<<"tree_size:"<<tree_size<<endl;    
+      
+    Input2();  
+      
+      
+    return 0;    
+}    
