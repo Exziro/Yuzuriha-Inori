@@ -28,3 +28,45 @@ std::size_t many_vetices;
 
 
 };
+#include <cassert>    // Provides assert
+#include <cstdlib>    // Provides size_t
+#include <set>        // Provides set
+
+
+namespace main_wtf_graph
+{
+template <class Item>
+void graph<Item>::add_vertex(const Item& label)
+{
+size_t new_vertex_number;
+size_t other_number;
+
+
+assert(size() < MAXIMUN);
+new_vertex_number = many_vetices;
+many_vetices++;
+for(other_number = 0;other_number < many_vetices; ++other_number)
+{
+edges[other_number][new_vertex_number] = false;
+edges[new_vertex_number][other_number] = false;
+}
+
+
+labels[new_vertex_number] = label;
+
+
+}
+template <class Item>
+void graph<Item>::add_edge(size_t source,size_t target)
+{
+if(source < many_vetices && target < many_vetices)
+edges[source][target] = true;
+}
+
+
+template <class Item>
+void graph<Item>::remove_edge(size_t source,size_t target)
+{
+if(source < many_vetices && target < many_vetices)
+edges[source][target] = false;
+}
