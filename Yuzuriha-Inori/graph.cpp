@@ -70,3 +70,18 @@ void graph<Item>::remove_edge(size_t source,size_t target)
 if(source < many_vetices && target < many_vetices)
 edges[source][target] = false;
 }
+template <class Item>
+bool graph<Item>::is_edge(size_t source,size_t target) const
+{
+if(source < many_vetices && target < many_vetices)
+return edges[source][target];
+
+}
+
+
+template <class Item>
+Item& graph<Item>::operator[](size_t vertex)
+{
+assert(vertex < size());
+return labels[vertex];
+}
