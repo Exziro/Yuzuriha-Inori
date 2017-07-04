@@ -79,9 +79,9 @@ return edges[source][target];
 }
 
 
-template <class Item>
-Item& graph<Item>::operator[](size_t vertex)
-{
-assert(vertex < size());
-return labels[vertex];
-}
+//template <class Item>
+//Item& graph<Item>::operator[](size_t vertex)
+//{
+//assert(vertex < size());
+//return labels[vertex];
+//}
