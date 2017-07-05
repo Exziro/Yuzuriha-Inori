@@ -85,3 +85,7 @@ return edges[source][target];
 //assert(vertex < size());
 //return labels[vertex];
 //}
+#include<iostream>
+#include"graph.h"
+using namespace std;
+using namespace main_wtf_graph;
