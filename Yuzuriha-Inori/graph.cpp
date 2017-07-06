@@ -89,3 +89,23 @@ return edges[source][target];
 #include"graph.h"
 using namespace std;
 using namespace main_wtf_graph;
+
+int main()
+{
+graph<double> t;
+
+
+t.add_vertex(3.14);
+t.add_vertex(2.17);
+t.add_vertex(2.01);
+t.add_edge(1,0);
+t.add_edge(1,2);
+
+set<size_t> connection;
+set<size_t>::iterator it;
+connection = t.neighbors(1);
+for(it = connection.begin(); it!=connection.end();it++)
+cout<<t[*it]<<endl;
+
+return 0;
+}
