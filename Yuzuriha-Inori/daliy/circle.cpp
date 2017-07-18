@@ -1,4 +1,5 @@
 #include<iostream>
+using namespace std;
 pair<Node<int>*, bool> 
 IsExitsLoop(Node<int>* head)
 {
