@@ -33,4 +33,19 @@ void link_process(Node *head,int k,int m)//从编号为k(1<=k<=n)的人开始报数，数到m
     Node *p = head,*tmp1;  
     while(p->data != k)//p指向的节点data为k  
         p = p->pnext;  
-      
+     while(p->pnext != p)  
+    {  
+        for(i=0;i<m;i++)  
+        {  
+            tmp1 = p;  
+            p = p->pnext;  
+        }  
+        printf("%d ",p->data);  
+        tmp1->pnext= p->pnext;  
+        free(p);  
+        p = tmp1->pnext;  
+  
+    }  
+    printf("%d ",p->data);  
+    free(p);  
+}   
