@@ -49,3 +49,11 @@ void link_process(Node *head,int k,int m)//从编号为k(1<=k<=n)的人开始报数，数到m
     printf("%d ",p->data);  
     free(p);  
 }   
+int main()  
+{  
+      
+    Node *head = link_create(5);      
+    link_process(head,3,1);  
+    system("pause");  
+    return 0;  
+}  
