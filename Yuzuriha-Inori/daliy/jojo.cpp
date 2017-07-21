@@ -57,3 +57,42 @@ int main()
     system("pause");  
     return 0;  
 }  
+///////////////////////////////////////
+#include<stdio.h>  
+#include<stdlib.h>  
+   
+typedef struct Node  
+{  
+       int data;  
+       struct Node *next;  
+} Node;  
+   
+/** 
+ * @功能约瑟夫环 
+ * @参数 total:总人数 
+ * @参数 from:第一个报数的人 
+ * @参数 count:出列者喊到的数 
+ * @更新 2013-12-5 
+ */  
+void JOSEPHUS(int total, int from, int count)  
+{  
+    // pcur为当前结点，pre为辅助结点，指向pcur的前驱结点，head为头节点  
+    Node *pcur, *pre, *head;  
+    head = NULL;  
+    int i;  
+     
+    // 建立循环链表  
+    for(i = 1; i <= total; i++)  
+    {  
+        pcur = (Node *)malloc(sizeof(Node));  
+        pcur->data = i;  
+        if(NULL ==head)  
+         {  
+           head = pcur;  
+         }  
+        else  
+         {  
+            pre->next = pcur;  
+         }  
+         pre = pcur;  
+    }  
