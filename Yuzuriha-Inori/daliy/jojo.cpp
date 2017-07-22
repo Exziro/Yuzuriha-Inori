@@ -96,3 +96,29 @@ void JOSEPHUS(int total, int from, int count)
          }  
          pre = pcur;  
     }  
+	    pcur->next = head;      // 尾节点连到头结点，使整个链表循环起来  
+    pcur = head;            // 使pcur指向头节点  
+     
+    // 把当前指针移动到第一个报数的人，即第k位的下一位  
+    for(i = 1; i < from; i++)  
+    {  
+        pre = pcur;  
+        pcur = pcur->next;  
+    }  
+     
+    // 循环地删除队列结点，每隔m-1个结点删一个  
+    while(pcur->next != pcur)  
+    {  
+        for(i = 1; i < count; i++)  
+        {  
+            pre = pcur;  
+            pcur = pcur->next;  
+        }  
+        pre->next =pcur->next;  
+        printf("deletenumber: %d\n", pcur->data);  
+        free(pcur);  
+        pcur = pre->next;  
+    }  
+     
+    printf("Thelast one is No.%d\n", pcur->data);  
+}  
