@@ -156,4 +156,60 @@ typedef void (*sighandler_t)(int);
 void sigpipe_handle(int arg); //sigpipe信号处理函数，当send或是recv在等待发送或是接收数据时发现连接断开，系统会发出该信号  
   
 static int fd = -1;  
+  int main(int argc,char *argv[])  
+{  
+        struct sockaddr_in server_sa = {0};  
+        int connect_ret = -1;  
+  
+        int send_ret = -1;  
+  
+        sighandler_t sig_ret = (sighandler_t)-1;  
+  
+        fd = socket(AF_INET,SOCK_STREAM,0);   //建立socket连接，设置连接类型  
+        if(fd < 0)  
+        {  
+                perror("socket");  
+                exit(-1);  
+        }  
+        printf("fd:%d\n",fd);  
+  
+        sig_ret = signal(SIGPIPE,sigpipe_handle);  //为sigpipe信号绑定处理函数  
+        if(SIG_ERR == sig_ret)  
+        {  
+                perror("signal");  
+                exit(-1);  
+        }  
+  
+        server_sa.sin_port = htons(SERVER_PORT);  
+        server_sa.sin_addr.s_addr = inet_addr(SERVER_IP);  
+        server_sa.sin_family = AF_INET;  
+        connect_ret = connect(fd,(struct sockaddr *)&server_sa,sizeof(server_sa));  //向服务器发送连接请求  
+        if(connect_ret < 0)  
+        {  
+                perror("connect");  
+                exit(-1);  
+        }  
+        debug("connect done\n");  
+  
+        char sendbuf[20] = {0};  
+        while(1)    //将用户输入的数据发送给服务器端，当输入end时，客户端退出  
+        {  
+                printf("input your data\n");  
+                scanf("%s",sendbuf);  
+                if(!strncmp(sendbuf, "end",3))  
+                {  
+                        debug("exiting....\n");  
+                        close(fd);  
+                        return 0;  
+                }  
+  
+                send_ret = send(fd,sendbuf,strlen(sendbuf),0);  //向服务器发送信息  
+                if(send_ret < 0)  
+                {  
+                        perror("send");  
+                        exit(-1);  
+                }  
+                printf("data sent successfully:%d\n",send_ret);  
+        }  
+}  
   
