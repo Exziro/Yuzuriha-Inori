@@ -212,4 +212,14 @@ static int fd = -1;
                 printf("data sent successfully:%d\n",send_ret);  
         }  
 }  
+  void sigpipe_handle(int arg)  //打印提示信息后再退出  
+{  
+        if(SIGPIPE == arg)  
+        {  
+                printf("server disconnect\n");  
+                close(fd);  
+                debug("exiting\n");  
+                exit(1);  
+        }  
+}  
   
