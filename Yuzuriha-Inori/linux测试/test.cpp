@@ -222,4 +222,52 @@ static int fd = -1;
                 exit(1);  
         }  
 }  
-  
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  /////select
+  /////server
+  #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/select.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
+
+static void usage(char* arg)
+{
+    printf("%s[local_ip][local_port]",arg);
+}
+
+int starup(char* ip,int port)
+{
+    int sock = socket(AF_INET,SOCK_STREAM,0);
+    if(sock < 0)
+    {
+        perror("socket");
+        exit(2);
+    }
+
+    struct sockaddr_in server;
+    server.sin_family = AF_INET;
+    server.sin_port = htons(port);
+    server.sin_addr.s_addr = inet_addr(ip);
+
+    int opt = 1;
+    setsockopt(sock,SOL_SOCKET,SO_REUSEADDR,&opt,sizeof(opt));
+
+    if(bind(sock,(struct sockaddr*)&server,sizeof(server)) < 0)
+    {
+        perror("bind");
+        exit(3);
+   }
+
+    if(listen(sock,10) < 0)
+    {
+        perror("listen");
+        exit(4);
+    }
+
+    return sock;
+}
