@@ -271,3 +271,168 @@ int starup(char* ip,int port)
 
     return sock;
 }
+int rfds_array[sizeof(fd_set) * 8];
+int write_array[sizeof(fd_set) * 8];
+
+int main(int argc,char* argv[])
+{
+   // printf("%d\n",sizeof(fd_set));
+    if(argc != 3)
+    {
+        usage(argv[0]);
+        return 1;
+    }
+
+    int listen_sock = starup(argv[1],atoi(argv[2]));
+
+    int nums = 8 * sizeof(fd_set);
+    fd_set read_set;
+    fd_set write_set;
+    rfds_array[0] = listen_sock;
+    write_array[0] = -1;
+    int i = 1;
+    for(;i < nums; ++i)
+    {
+        rfds_array[i] = -1;
+        write_array[i] = -1;
+    }
+
+    while(1)
+    {
+        FD_ZERO(&write_set);
+        FD_ZERO(&read_set);
+        int max_fd = -1;
+       // FD_SET(listen_sock,&read_set);
+        for(i = 0;i < nums; ++i)
+        {
+            if(rfds_array[i] < 0)
+                continue;
+
+            if(max_fd < rfds_array[i])
+                max_fd = rfds_array[i];
+
+            FD_SET(rfds_array[i],&read_set);
+        }
+
+        for(i = 0;i < nums;++i)
+        {
+            if(write_array[i] == -1)
+                continue;
+            if(max_fd < write_array[i])
+                max_fd = write_array[i];
+            FD_SET(write_array[i],&write_set);
+        }
+
+        //struct timeval timeout;
+        //timeout.tv_sec = 2;
+        //timeout.tv_usec = 0;
+
+        int ret = select(max_fd + 1,&read_set,&write_set,NULL,NULL);
+        if(ret > 0)
+        {
+            for(i = 0; i < nums; ++i)
+            {
+                if(i == 0 && FD_ISSET(listen_sock,&read_set))
+                {
+                    struct sockaddr_in client;
+                    socklen_t len = sizeof(client);
+                    int new_sock = accept(listen_sock,(struct sockaddr*)&client,&len);
+                    if(new_sock <= 0)
+                    {
+                        perror("accept");
+                       // continue;                        
+                    }
+                    else
+                    {
+                        int j = 1;
+                        for(; j < nums; ++j)
+                        {
+                            if(rfds_array[j] == -1)
+                                break;
+                        }
+
+                        if(j < nums)
+                        {
+                            rfds_array[j] = new_sock;
+                        }
+                        else
+                        {
+                            printf("fd_set is full\n");
+                            close(new_sock);
+                //            continue;
+                        }
+                        printf("new client come %s %d\n",inet_ntoa(client.sin_addr),ntohs(client.sin_port));
+                        for(j = 0;j < nums;++j)
+                        {
+                            if(write_array[j] == -1)
+                                break;
+                        }
+
+                        if(j < nums)
+                            write_array[j] = new_sock;
+                        else
+                        {
+                            printf("cannot write\n");   
+                        }
+                    }
+                }//i == 0
+                else if(i > 0 && FD_ISSET(rfds_array[i],&read_set))
+                {
+                    char buf[1024];
+                    ssize_t s = read(rfds_array[i],buf,sizeof(buf) - 1);
+                    if(s == 0)
+                    {
+                        printf("client is quit..\n");
+                        close(rfds_array[i]);
+                        int j = 0;
+                        for(;j< nums; ++j)
+                        {
+                            if(write_array[j] == rfds_array[i])
+                                break;
+                        }
+                        if(j < nums)
+                            write_array[j] = -1;
+
+                        rfds_array[i] = -1;
+
+                 //       continue;
+                    }
+                    else if(s < 0)
+                    {
+                        perror("read");
+                        close(rfds_array[i]);
+                        rfds_array[i] = -1;
+                 //       continue;
+                    }
+                    else
+                    {
+                        buf[s] = 0;
+  //                      printf("%s %d:",inet_ntoa(client.sin_addr),ntohs(client.sin_port));
+                        printf("%s\n",buf);
+                 //       write(rfds_array[i],buf,strlen(buf));
+                    }
+                }//i > 0
+
+                if(write_array[i] != -1 && FD_ISSET(write_array[i],&write_set))
+                {
+                    char* buf = "hello word";
+                    printf("%s\n",buf);
+                    write(write_array[i],buf,strlen(buf));
+                }
+
+            }//for
+        }
+        else if(ret == 0)
+        {
+            printf("nothing is ready..\n");
+        }
+        else
+        {
+            perror("select");
+            return 5;
+        }
+
+    }
+
+    return 0;
+}
