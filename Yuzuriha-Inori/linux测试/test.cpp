@@ -436,3 +436,33 @@ int main(int argc,char* argv[])
 
     return 0;
 }
+////////////////////////////////////////////////////
+/////////////epoll
+#include<errno.h>  
+#include<assert.h>  
+#include<string.h>  
+  
+static void usage(const char* proc)  
+{  
+    assert(proc);  
+    printf("usage: %s [ip] [port]\n",proc);  
+}  
+  
+static int set_nonblock(int fd)  
+{  
+    int fl = fcntl(fd,F_SETFL);  
+    fcntl(fd,F_SETFL,fl|O_NONBLOCK);  
+}  
+  
+int my_read(int fd,char* buf,int len)  
+{  
+    assert(buf);  
+    ssize_t total = 0;  
+    ssize_t s = 0;  
+    while((s = read(fd,&buf[total],len - 1 - total)) > 0&&errno != EAGAIN)  
+    {  
+        total += s;  
+    }  
+  
+    return total;  
+}  
