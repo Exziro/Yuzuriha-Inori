@@ -466,3 +466,34 @@ int my_read(int fd,char* buf,int len)
   
     return total;  
 }  
+int start_up(char* ip,int port)  
+{  
+    assert(ip);  
+    assert(port > 0);  
+  
+    int sock = socket(AF_INET,SOCK_STREAM,0);  
+    if(sock < 0)  
+    {  
+        perror("socket");  
+        exit(1);  
+    }  
+      
+    struct sockaddr_in local;  
+    local.sin_family = AF_INET;  
+    local.sin_port = htons(port);  
+    local.sin_addr.s_addr = inet_addr(ip);  
+  
+    if(bind(sock,(struct sockaddr*)&local,sizeof(local)) < 0)  
+    {  
+        perror("bind");  
+        exit(2);  
+    }  
+  
+    if(listen(sock,5) < 0)  
+    {  
+        perror("listen");  
+        exit(3);  
+    }  
+  
+    return sock;  
+}  
