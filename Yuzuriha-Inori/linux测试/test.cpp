@@ -497,3 +497,17 @@ int start_up(char* ip,int port)
   
     return sock;  
 }  
+int main(int argc,char* argv[])  
+{  
+    if(argc != 3)  
+    {  
+        usage(argv[0]);  
+        return 1;  
+    }  
+    int listen_sock = start_up(argv[1],atoi(argv[2]));  
+    int epfd = epoll_create(256);  
+    if(epfd < 0)  
+    {  
+        perror("epoll_create");  
+        return 2;  
+    }  
