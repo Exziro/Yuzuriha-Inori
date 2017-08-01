@@ -511,3 +511,12 @@ int main(int argc,char* argv[])
         perror("epoll_create");  
         return 2;  
     }  
+	    struct epoll_event ev;  
+    ev.events = EPOLLIN;  
+    ev.data.fd = listen_sock;  
+    epoll_ctl(epfd,EPOLL_CTL_ADD,listen_sock,&ev);  
+    int nums = 0;  
+  
+    struct epoll_event ready_events[64];  
+    int len = 64;  
+    int timeout = -1; 
