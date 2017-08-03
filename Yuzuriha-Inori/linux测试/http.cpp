@@ -79,3 +79,48 @@ void AllocateMemory(char **s, int l, char *d)
     bzero(*s, l + 1);  
     memcpy(*s, d, l);  
 }  
+/************关于本文档********************************************  
+*filename: das-server.c  
+*purpose: 这是在Linux下用C语言写的目录访问服务器，支持目录浏览和文件下载  
+  
+*********************************************************************/  
+/*------------------------------------------------------  
+*--- GiveResponse - 把Path所指的内容发送到client_sock去  
+*-------------------如果Path是一个目录，则列出目录内容  
+*-------------------如果Path是一个文件，则下载文件  
+*------------------------------------------------------  
+*/  
+void GiveResponse(FILE * client_sock, char *Path)  
+{  
+    struct dirent *dirent;  
+    struct stat info;  
+    char Filename[MAXPATH];  
+    DIR *dir;  
+    int fd, len, ret;  
+    char *p, *realPath, *realFilename, *nport;  
+  
+    /* 获得实际工作目录或文件 */  
+    len = strlen(dirroot) + strlen(Path) + 1;  
+    realPath = malloc(len + 1);  
+    bzero(realPath, len + 1);  
+    sprintf(realPath, "%s/%s", dirroot, Path);  
+  
+    /* 获得实际工作端口 */  
+    len = strlen(port) + 1;  
+    nport = malloc(len + 1);  
+    bzero(nport, len + 1);  
+    sprintf(nport, ":%s", port);  
+  
+    /* 获得实际工作目录或文件的信息以判断是文件还是目录 */  
+    if (stat(realPath, &info))  
+    {  
+        fprintf(client_sock,  
+             "HTTP/1.1 200 OK\r\nServer:SONG\r\nConnection: close\r\nContent-Type:text/html; charset=UTF-8\r\n\r\n<html><head><title>%d - %s</title></head>"  
+             "<body><font size=+4>Linux directory access server</font><br><hr width=\"100%%\"><br><center>"  
+             "<table border cols=3 width=\"100%%\">", errno,  
+             strerror(errno));  
+        fprintf(client_sock,  
+             "</table><font color=\"CC0000\" size=+2>Please contact the administrator consulting why appear as follows error message：\n%s %s</font></body></html>",  
+             Path, strerror(errno));  
+        goto out;  
+    }  
