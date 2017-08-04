@@ -124,3 +124,19 @@ void GiveResponse(FILE * client_sock, char *Path)
              Path, strerror(errno));  
         goto out;  
     }  
+	    /* 处理浏览文件请求，即下载文件 */  
+    if (S_ISREG(info.st_mode))  
+    {  
+        fd = open(realPath, O_RDONLY);  
+        len = lseek(fd, 0, SEEK_END);  
+        p = (char *) malloc(len + 1);  
+        bzero(p, len + 1);  
+        lseek(fd, 0, SEEK_SET);  
+        ret = read(fd, p, len);  
+        close(fd);  
+        fprintf(client_sock,  
+             "HTTP/1.1 200 OK\r\nServer:SONG\r\nConnection: keep-alive\r\nContent-type: application/*\r\nContent-Length:%d\r\n\r\n",  
+             len);  
+        fwrite(p, len, 1, client_sock);  
+        free(p);  
+    }  
