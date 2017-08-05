@@ -139,4 +139,21 @@ void GiveResponse(FILE * client_sock, char *Path)
              len);  
         fwrite(p, len, 1, client_sock);  
         free(p);  
-    }  
+    }        /* 处理浏览目录请求 */  
+        dir = opendir(realPath);  
+        fprintf(client_sock,  
+             "HTTP/1.1 200 OK\r\nServer:SONG\r\nConnection: close\r\nContent-Type:text/html; charset=UTF-8\r\n\r\n<html><head><title>%s</title></head>"  
+             "<body><font size=+4>Linux directory access server</font><br><hr width=\"100%%\"><br><center>"  
+             "<table border cols=3 width=\"100%%\">", Path);  
+        fprintf(client_sock,  
+             "<caption><font size=+3>dir %s</font></caption>\n",  
+             Path);  
+        fprintf(client_sock,  
+             "<tr><td>name</td><td>大小</td><td>change time</td></tr>\n");  
+        if (dir == 0)  
+        {  
+            fprintf(client_sock,  
+                 "</table><font color=\"CC0000\" size=+2>%s</font></body></html>",  
+                 strerror(errno));  
+            return;  
+        }    
