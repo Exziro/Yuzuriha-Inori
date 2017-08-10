@@ -168,3 +168,40 @@ void bad_request(int client)
  * Parameters: the client socket descriptor 
  *             FILE pointer for the file to cat */  
 /**********************************************************************/  
+void cat(int client, FILE *resource)  
+{  
+    char buf[1024];  
+  
+    /*读取文件中的所有数据写到 socket */  
+    fgets(buf, sizeof(buf), resource);  
+    while (!feof(resource))  
+    {  
+        send(client, buf, strlen(buf), 0);  
+        fgets(buf, sizeof(buf), resource);  
+    }  
+}  
+  
+/**********************************************************************/  
+/* Inform the client that a CGI script could not be executed. 
+ * Parameter: the client socket descriptor. */  
+/**********************************************************************/  
+void cannot_execute(int client)  
+{  
+    char buf[1024];  
+  
+    /* 回应客户端 cgi 无法执行*/  
+    sprintf(buf, "HTTP/1.0 500 Internal Server Error\r\n");  
+    send(client, buf, strlen(buf), 0);  
+    sprintf(buf, "Content-type: text/html\r\n");  
+    send(client, buf, strlen(buf), 0);  
+    sprintf(buf, "\r\n");  
+    send(client, buf, strlen(buf), 0);  
+    sprintf(buf, "<P>Error prohibited CGI execution.\r\n");  
+    send(client, buf, strlen(buf), 0);  
+}  
+  
+/**********************************************************************/  
+/* Print out an error message with perror() (for system errors; based 
+ * on value of errno, which indicates system call errors) and exit the 
+ * program indicating an error. */  
+/**********************************************************************/  
