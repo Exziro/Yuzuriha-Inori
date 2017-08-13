@@ -520,3 +520,13 @@ int main(int argc,char* argv[])
     struct epoll_event ready_events[64];  
     int len = 64;  
     int timeout = -1; 
+	 while(1)  
+    {  
+        switch(nums = epoll_wait(epfd,ready_events,len,timeout))  
+        {  
+            case 0:  
+                printf("timeout..");  
+                break;  
+            case -1:  
+                perror("epoll_wait");  
+                break;  
