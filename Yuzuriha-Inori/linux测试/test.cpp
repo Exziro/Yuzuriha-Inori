@@ -530,3 +530,27 @@ int main(int argc,char* argv[])
             case -1:  
                 perror("epoll_wait");  
                 break;  
+				            default:  
+                {  
+                    int i = 0;  
+                    for(;i < nums; i++)  
+                    {  
+                        int fd = ready_events[i].data.fd;  
+                        if(fd == listen_sock && ready_events[i].events & EPOLLIN)  
+                        {  
+                            struct sockaddr_in client;  
+                            socklen_t len = sizeof(client);  
+                            int new_fd = accept(listen_sock,(struct sockaddr*)&client,&len);  
+                            if(new_fd < 0)  
+                            {  
+                                perror("accept");  
+                                continue;  
+                            }  
+  
+                            printf("get a new client:%s:%d\n",inet_ntoa(client.sin_addr),ntohs(client.sin_port));  
+  
+                            ev.events = EPOLLIN|EPOLLET;  
+                            ev.data.fd = new_fd;  
+                            set_nonblock(new_fd);  
+                            epoll_ctl(epfd,EPOLL_CTL_ADD,new_fd,&ev);  
+                        }  
