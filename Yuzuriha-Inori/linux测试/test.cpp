@@ -554,3 +554,17 @@ int main(int argc,char* argv[])
                             set_nonblock(new_fd);  
                             epoll_ctl(epfd,EPOLL_CTL_ADD,new_fd,&ev);  
                         }  
+						                        else  
+                        {  
+                            if(ready_events[i].events & EPOLLIN)  
+                            {  
+                                char buf[1024];  
+                                ssize_t s = read(fd,buf,sizeof(buf) - 1);  
+                                if(s > 0)  
+                                {  
+                                    buf[s] = 0;  
+                                    printf("client#%s\n",buf);  
+                                    ev.events = EPOLLOUT|EPOLLET;  
+                                    ev.data.fd = fd;  
+                                    epoll_ctl(epfd,EPOLL_CTL_MOD,fd,&ev);  
+                                }  
