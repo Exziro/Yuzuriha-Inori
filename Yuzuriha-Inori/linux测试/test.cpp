@@ -568,3 +568,9 @@ int main(int argc,char* argv[])
                                     ev.data.fd = fd;  
                                     epoll_ctl(epfd,EPOLL_CTL_MOD,fd,&ev);  
                                 }  
+								                                else if(s == 0)  
+                                {  
+                                    epoll_ctl(epfd,EPOLL_CTL_DEL,fd,NULL);  
+                                    close(fd);  
+                                    printf("client close...");  
+                                }  
