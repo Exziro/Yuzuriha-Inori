@@ -574,3 +574,8 @@ int main(int argc,char* argv[])
                                     close(fd);  
                                     printf("client close...");  
                                 }  
+								                                else  
+                                {  
+                                    perror("read");  
+                                }  
+                            }  
