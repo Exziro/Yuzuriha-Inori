@@ -578,4 +578,12 @@ int main(int argc,char* argv[])
                                 {  
                                     perror("read");  
                                 }  
+                            } 
+                            else if(ready_events[i].events & EPOLLOUT)  
+                            {  
+                                char buf[1024];  
+                                sprintf(buf,"HTTP/1.0 200 OK\r\n\r\n<html><h2>hello</h2></html>");  
+                                write(fd,buf,strlen(buf));  
+                                epoll_ctl(epfd,EPOLL_CTL_DEL,fd,NULL);  
+                                close(fd);  
                             }  
