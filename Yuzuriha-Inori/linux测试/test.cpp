@@ -587,3 +587,13 @@ int main(int argc,char* argv[])
                                 epoll_ctl(epfd,EPOLL_CTL_DEL,fd,NULL);  
                                 close(fd);  
                             }  
+							                            else  
+                            {}  
+                        }  
+                    }  
+                }  
+                break;  
+        }  
+    }  
+    return 0;  
+}  
