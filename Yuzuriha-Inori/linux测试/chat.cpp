@@ -51,3 +51,8 @@ int main(int argc,char *argv[])
     }  
     printf("wait for connect!\n");  
     len=sizeof(struct sockaddr);  
+    if((new_fd=accept(sockfd,(struct sockaddr *)&their_addr,&len))==-1)  
+    {  
+        perror("accept");  
+        exit(EXIT_FAILURE);  
+    }  
