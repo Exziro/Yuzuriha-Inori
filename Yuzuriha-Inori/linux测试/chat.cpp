@@ -56,3 +56,11 @@ int main(int argc,char *argv[])
         perror("accept");  
         exit(EXIT_FAILURE);  
     }  
+	    else  
+        printf("server:got connection from %s,port %d,socket %d\n",inet_ntoa(their_addr.sin_addr),ntohs(their_addr.sin_port),new_fd);  
+    while(1)  
+    {  
+        printf("newfd=%d\n",new_fd);  
+        bzero(buf,MAXBUF+1);  
+        printf("input the message to send:");  
+        fgets(buf,MAXBUF,stdin);  
