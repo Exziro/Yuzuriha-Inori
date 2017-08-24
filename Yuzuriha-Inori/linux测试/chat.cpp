@@ -64,3 +64,12 @@ int main(int argc,char *argv[])
         bzero(buf,MAXBUF+1);  
         printf("input the message to send:");  
         fgets(buf,MAXBUF,stdin);  
+		        if(!strncasecmp(buf,"quit",4))  
+        {  
+            printf("i will close the connect!\n");  
+            break;        
+        }  
+        len=send(new_fd,buf,strlen(buf)-1,0);  
+        if(len>0)  
+            printf("message:%s\t send sucessful,send %dbyte!\n",buf,len);  
+        else  
