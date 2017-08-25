@@ -73,3 +73,24 @@ int main(int argc,char *argv[])
         if(len>0)  
             printf("message:%s\t send sucessful,send %dbyte!\n",buf,len);  
         else  
+			       {  
+            printf("message'%s' send failure!errno code is %d,errno message is '%s'\n",buf,errno,strerror(errno));  
+            break;    
+        }  
+        bzero(buf,MAXBUF+1);  
+        len=recv(new_fd,buf,MAXBUF,0);  
+        if(len>0)  
+            printf("message recv successful:'%s',%dByte recv\n",buf,len);  
+        else  
+        {  
+            if(len<0)  
+                printf("recv failure!errno code is %d,errno message is '%s'\n",errno,strerror(errno));  
+            else  
+                printf("the other one close quit\n");  
+            break;  
+        }  
+    }  
+    close(new_fd);  
+    close(sockfd);  
+    return 0;  
+}  
