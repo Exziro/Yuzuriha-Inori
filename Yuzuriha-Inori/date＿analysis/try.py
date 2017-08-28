@@ -11,3 +11,4 @@ from pandas import Series,DataFrame
 
 data_train = pd.read_csv("/Users/Hanxiaoyang/Titanic_data/Train.csv")
 data_train
+data_train.info()
