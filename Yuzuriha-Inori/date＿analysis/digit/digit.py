@@ -23,3 +23,15 @@ def nomalizing(array):
             if array[i,j]!=0:
                 array[i,j]=1
     return array
+def loadTrainData():
+    l=[]
+    with open('train.csv') as file:
+         lines=csv.reader(file)
+         for line in lines:
+             l.append(line) #42001*785
+    l.remove(l[0])
+    l=array(l)
+    label=l[:,0]
+    data=l[:,1:]
+    return nomalizing(toInt(data)),toInt(label)  #label 1*42000  data 42000*784
+#return trainData,trainLabel
