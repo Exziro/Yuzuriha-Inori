@@ -35,3 +35,13 @@ def loadTrainData():
     data=l[:,1:]
     return nomalizing(toInt(data)),toInt(label)  #label 1*42000  data 42000*784
 #return trainData,trainLabel
+def loadTestData():
+    l=[]
+    with open('test.csv') as file:
+         lines=csv.reader(file)
+         for line in lines:
+             l.append(line)#28001*784
+    l.remove(l[0])
+    data=array(l)
+    return nomalizing(toInt(data))  #  data 28000*784
+#return testData
