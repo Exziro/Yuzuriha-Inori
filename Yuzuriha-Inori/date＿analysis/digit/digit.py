@@ -45,3 +45,12 @@ def loadTestData():
     data=array(l)
     return nomalizing(toInt(data))  #  data 28000*784
 #return testData
+def loadTestResult():
+    l=[]
+    with open('knn_benchmark.csv') as file:
+         lines=csv.reader(file)
+         for line in lines:
+             l.append(line)#28001*2
+    l.remove(l[0])
+    label=array(l)
+    return toInt(label[:,1]) #  label 28000*1
