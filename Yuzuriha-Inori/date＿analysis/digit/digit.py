@@ -54,3 +54,11 @@ def loadTestResult():
     l.remove(l[0])
     label=array(l)
     return toInt(label[:,1]) #  label 28000*1
+#csvName是存放结果的csv文件名
+def saveResult(result,csvName):
+    with open(csvName,'wb') as myFile:    
+        myWriter=csv.writer(myFile)
+        for i in result:
+            tmp=[]
+            tmp.append(i)
+myWriter.writerow(tmp)
