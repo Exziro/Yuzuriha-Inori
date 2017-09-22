@@ -62,3 +62,15 @@ def saveResult(result,csvName):
             tmp=[]
             tmp.append(i)
 myWriter.writerow(tmp)
+
+from sklearn.neighbors import KNeighborsClassifier  
+def knnClassify(trainData,trainLabel,testData): 
+    knnClf=KNeighborsClassifier()#default:k = 5,defined by yourself:KNeighborsClassifier(n_neighbors=10)
+    knnClf.fit(trainData,ravel(trainLabel))
+    testLabel=knnClf.predict(testData)
+    saveResult(testLabel,'sklearn_knn_Result.csv')
+    return testLabel
+
+
+
+
