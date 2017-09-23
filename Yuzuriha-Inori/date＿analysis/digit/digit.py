@@ -70,7 +70,13 @@ def knnClassify(trainData,trainLabel,testData):
     testLabel=knnClf.predict(testData)
     saveResult(testLabel,'sklearn_knn_Result.csv')
     return testLabel
-
+from sklearn import svm   
+def svcClassify(trainData,trainLabel,testData): 
+    svcClf=svm.SVC(C=5.0) #default:C=1.0,kernel = 'rbf'. you can try kernel:‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’  
+    svcClf.fit(trainData,ravel(trainLabel))
+    testLabel=svcClf.predict(testData)
+    saveResult(testLabel,'sklearn_SVC_C=5.0_Result.csv')
+    return testLabel
 
 
 
