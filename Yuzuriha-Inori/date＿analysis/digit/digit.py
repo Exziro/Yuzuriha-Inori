@@ -77,6 +77,13 @@ def svcClassify(trainData,trainLabel,testData):
     testLabel=svcClf.predict(testData)
     saveResult(testLabel,'sklearn_SVC_C=5.0_Result.csv')
     return testLabel
-
+#调用scikit的朴素贝叶斯算法包,GaussianNB和MultinomialNB
+from sklearn.naive_bayes import GaussianNB      #nb for 高斯分布的数据
+def GaussianNBClassify(trainData,trainLabel,testData): 
+    nbClf=GaussianNB()          
+    nbClf.fit(trainData,ravel(trainLabel))
+    testLabel=nbClf.predict(testData)
+    saveResult(testLabel,'sklearn_GaussianNB_Result.csv')
+    return testLabel
 
 
