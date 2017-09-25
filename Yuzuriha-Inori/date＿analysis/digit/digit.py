@@ -85,5 +85,11 @@ def GaussianNBClassify(trainData,trainLabel,testData):
     testLabel=nbClf.predict(testData)
     saveResult(testLabel,'sklearn_GaussianNB_Result.csv')
     return testLabel
-
+from sklearn.naive_bayes import MultinomialNB   #nb for 多项式分布的数据    
+def MultinomialNBClassify(trainData,trainLabel,testData): 
+    nbClf=MultinomialNB(alpha=0.1)      #default alpha=1.0,Setting alpha = 1 is called Laplace smoothing, while alpha < 1 is called Lidstone smoothing.       
+    nbClf.fit(trainData,ravel(trainLabel))
+    testLabel=nbClf.predict(testData)
+    saveResult(testLabel,'sklearn_MultinomialNB_alpha=0.1_Result.csv')
+    return testLabel
 
